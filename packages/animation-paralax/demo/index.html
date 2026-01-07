@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Animation Paralax - Demo</title>
+    <script type="module" src="../src/animation-paralax.js"></script>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: #0a0a0a;
+        color: #fff;
+      }
+
+      .page-content {
+        min-height: 300vh;
+      }
+
+      h1 {
+        text-align: center;
+        padding: 2rem;
+        font-weight: 300;
+        letter-spacing: 2px;
+        background: rgba(0, 0, 0, 0.5);
+      }
+
+      .section {
+        padding: 4rem 2rem;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .section h2 {
+        margin-bottom: 1rem;
+        font-weight: 400;
+      }
+
+      .section p {
+        line-height: 1.8;
+        color: #ccc;
+        margin-bottom: 1rem;
+      }
+
+      /* Main parallax section */
+      .main-paralax {
+        --paralax-height: 100vh;
+      }
+
+      .paralax-overlay {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        text-align: center;
+        padding: 2rem;
+      }
+
+      .paralax-overlay h1 {
+        font-size: 4rem;
+        font-weight: 200;
+        margin-bottom: 1rem;
+        text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+        background: transparent;
+      }
+
+      .paralax-overlay p {
+        font-size: 1.5rem;
+        opacity: 0.9;
+        max-width: 600px;
+        text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+      }
+
+      /* Mouse-enabled demo */
+      .mouse-demo {
+        --paralax-height: 60vh;
+        margin: 2rem 0;
+      }
+
+      .mouse-demo-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        font-size: 2rem;
+        background: rgba(0, 0, 0, 0.3);
+      }
+
+      /* Controls */
+      .controls {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 100;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        padding: 1rem;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border-radius: 12px;
+      }
+
+      .controls label {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.9rem;
+        cursor: pointer;
+      }
+
+      .controls input[type='range'] {
+        width: 100px;
+        accent-color: #667eea;
+      }
+
+      .controls input[type='checkbox'] {
+        accent-color: #667eea;
+      }
+
+      /* Info box */
+      .info-box {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 100;
+        padding: 1rem;
+        background: rgba(0, 0, 0, 0.7);
+        border-radius: 8px;
+        font-family: monospace;
+        font-size: 0.85rem;
+      }
+
+      .scroll-indicator {
+        position: fixed;
+        bottom: 40px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+        animation: bounce 2s infinite;
+      }
+
+      .scroll-indicator svg {
+        width: 30px;
+        height: 30px;
+        fill: white;
+      }
+
+      @keyframes bounce {
+        0%, 20%, 50%, 80%, 100% {
+          transform: translateX(-50%) translateY(0);
+        }
+        40% {
+          transform: translateX(-50%) translateY(-10px);
+        }
+        60% {
+          transform: translateX(-50%) translateY(-5px);
+        }
+      }
+
+      /* Placeholder images using gradients */
+      .layer-bg {
+        background: linear-gradient(180deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+        width: 100%;
+        height: 120%;
+      }
+
+      .layer-mid {
+        background:
+          radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 20%),
+          radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.08) 0%, transparent 15%),
+          radial-gradient(circle at 50% 50%, rgba(102, 126, 234, 0.1) 0%, transparent 30%);
+        width: 100%;
+        height: 120%;
+      }
+
+      .layer-fg {
+        background:
+          radial-gradient(circle at 10% 90%, rgba(255, 255, 255, 0.15) 0%, transparent 10%),
+          radial-gradient(circle at 90% 10%, rgba(255, 255, 255, 0.12) 0%, transparent 8%),
+          radial-gradient(circle at 30% 40%, rgba(255, 255, 255, 0.1) 0%, transparent 5%),
+          radial-gradient(circle at 70% 60%, rgba(255, 255, 255, 0.08) 0%, transparent 4%);
+        width: 100%;
+        height: 120%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page-content">
+      <div class="info-box">
+        <div>Scroll Y: <span id="scrollY">0</span>px</div>
+        <div>Sensitivity: <span id="sensitivityValue">1</span></div>
+      </div>
+
+      <div class="controls">
+        <label>
+          Sensitivity
+          <input type="range" id="sensitivitySlider" min="0.1" max="3" step="0.1" value="1" />
+        </label>
+        <label>
+          <input type="checkbox" id="disableToggle" />
+          Disable Effect
+        </label>
+        <label>
+          Direction
+          <select id="directionSelect">
+            <option value="vertical">Vertical</option>
+            <option value="horizontal">Horizontal</option>
+            <option value="both">Both</option>
+          </select>
+        </label>
+      </div>
+
+      <animation-paralax
+        id="mainParalax"
+        class="main-paralax"
+        direction="vertical"
+      >
+        <div class="paralax-overlay">
+          <h1>Parallax Effect</h1>
+          <p>Scroll down to see the layers move at different speeds</p>
+        </div>
+      </animation-paralax>
+
+      <div class="scroll-indicator">
+        <svg viewBox="0 0 24 24">
+          <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+        </svg>
+        <span>Scroll</span>
+      </div>
+
+      <div class="section">
+        <h2>About Parallax Scrolling</h2>
+        <p>
+          Parallax scrolling is a web design technique where background images move slower
+          than foreground images, creating an illusion of depth and immersion.
+        </p>
+        <p>
+          This component supports multiple layers with configurable speeds, vertical and
+          horizontal scrolling directions, and optional mouse-based movement tracking.
+        </p>
+      </div>
+
+      <animation-paralax
+        class="mouse-demo"
+        mouse-enabled
+        direction="both"
+        sensitivity="1.5"
+      >
+        <div class="mouse-demo-content">
+          <p>Move your mouse over this area</p>
+        </div>
+      </animation-paralax>
+
+      <div class="section">
+        <h2>Features</h2>
+        <p>
+          The animation-paralax component offers CSS custom properties for easy theming,
+          respects the prefers-reduced-motion media query for accessibility, and uses
+          IntersectionObserver to pause updates when not visible.
+        </p>
+        <p>
+          You can add layers dynamically, set custom scroll targets, and combine scroll
+          and mouse tracking for rich interactive experiences.
+        </p>
+      </div>
+
+      <div class="section" style="height: 50vh;">
+        <h2>End of Demo</h2>
+        <p>Thanks for scrolling!</p>
+      </div>
+    </div>
+
+    <script>
+      // Create gradient-based layers for demo (since we don't have actual images)
+      const createSvgLayer = (color1, color2) => {
+        const svg = `
+          <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 1920 1080">
+            <defs>
+              <linearGradient id="grad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" style="stop-color:${color1};stop-opacity:1" />
+                <stop offset="100%" style="stop-color:${color2};stop-opacity:1" />
+              </linearGradient>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#grad)"/>
+          </svg>
+        `;
+        return `data:image/svg+xml,${encodeURIComponent(svg)}`;
+      };
+
+      const createStarsLayer = (opacity) => {
+        let stars = '';
+        for (let i = 0; i < 100; i++) {
+          const x = Math.random() * 1920;
+          const y = Math.random() * 1080;
+          const r = Math.random() * 2 + 0.5;
+          stars += `<circle cx="${x}" cy="${y}" r="${r}" fill="white" opacity="${Math.random() * 0.5 + 0.3}"/>`;
+        }
+        const svg = `
+          <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 1920 1080">
+            <rect width="100%" height="100%" fill="transparent"/>
+            ${stars}
+          </svg>
+        `;
+        return `data:image/svg+xml,${encodeURIComponent(svg)}`;
+      };
+
+      const mainParalax = document.getElementById('mainParalax');
+      const sensitivitySlider = document.getElementById('sensitivitySlider');
+      const sensitivityValue = document.getElementById('sensitivityValue');
+      const disableToggle = document.getElementById('disableToggle');
+      const directionSelect = document.getElementById('directionSelect');
+      const scrollYDisplay = document.getElementById('scrollY');
+
+      // Set up layers
+      mainParalax.layers = [
+        { src: createSvgLayer('#1a1a2e', '#0f3460'), speed: 0.1, type: 'background' },
+        { src: createStarsLayer(0.3), speed: 0.3, type: 'midground' },
+        { src: createStarsLayer(0.6), speed: 0.6, type: 'foreground' },
+      ];
+
+      // Set up layers for mouse demo
+      const mouseDemo = document.querySelector('.mouse-demo');
+      mouseDemo.layers = [
+        { src: createSvgLayer('#2d1b4e', '#1a0a2e'), speed: 0.2, type: 'background' },
+        { src: createStarsLayer(0.5), speed: 0.5, type: 'midground' },
+        { src: createStarsLayer(0.8), speed: 0.8, type: 'foreground' },
+      ];
+
+      sensitivitySlider.addEventListener('input', (e) => {
+        const value = parseFloat(e.target.value);
+        mainParalax.sensitivity = value;
+        sensitivityValue.textContent = value.toFixed(1);
+      });
+
+      disableToggle.addEventListener('change', (e) => {
+        mainParalax.disabled = e.target.checked;
+      });
+
+      directionSelect.addEventListener('change', (e) => {
+        mainParalax.direction = e.target.value;
+      });
+
+      mainParalax.addEventListener('scroll-update', (e) => {
+        scrollYDisplay.textContent = Math.round(e.detail.scrollY);
+      });
+
+      // Update scroll display on window scroll
+      window.addEventListener('scroll', () => {
+        scrollYDisplay.textContent = Math.round(window.scrollY);
+      });
+    </script>
+  </body>
+</html>

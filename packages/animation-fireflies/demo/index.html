@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Animation Fireflies - Demo</title>
+    <script type="module" src="../src/animation-fireflies.js"></script>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: #0a1628;
+        min-height: 100vh;
+        color: #fff;
+      }
+
+      h1 {
+        text-align: center;
+        padding: 2rem;
+        font-weight: 300;
+        letter-spacing: 4px;
+        color: #ffe066;
+        text-shadow: 0 0 20px rgba(255, 224, 102, 0.5);
+      }
+
+      .demo-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 1rem 2rem;
+      }
+
+      .main-fireflies {
+        --fireflies-height: 500px;
+        --fireflies-background: linear-gradient(180deg,
+          #0a1628 0%,
+          #0d1f3c 30%,
+          #1a2a4a 60%,
+          #0f1922 100%
+        );
+        border-radius: 16px;
+        overflow: hidden;
+        margin-bottom: 2rem;
+        position: relative;
+      }
+
+      .overlay-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        text-align: center;
+        pointer-events: none;
+      }
+
+      .overlay-content h2 {
+        font-size: 3rem;
+        font-weight: 200;
+        letter-spacing: 8px;
+        margin-bottom: 1rem;
+        color: rgba(255, 255, 255, 0.9);
+        text-shadow: 0 0 30px rgba(255, 224, 102, 0.3);
+      }
+
+      .overlay-content p {
+        font-size: 1.2rem;
+        color: rgba(255, 255, 255, 0.6);
+      }
+
+      .controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+        justify-content: center;
+        padding: 1.5rem;
+        background: rgba(255, 224, 102, 0.05);
+        border: 1px solid rgba(255, 224, 102, 0.2);
+        border-radius: 12px;
+        margin-bottom: 2rem;
+      }
+
+      .control-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        min-width: 140px;
+      }
+
+      .control-group label {
+        font-size: 0.875rem;
+        color: #ffe066;
+        opacity: 0.8;
+      }
+
+      input[type='range'] {
+        width: 140px;
+        accent-color: #ffe066;
+      }
+
+      button {
+        padding: 0.75rem 1.5rem;
+        border: 1px solid #ffe066;
+        border-radius: 8px;
+        background: transparent;
+        color: #ffe066;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      button:hover {
+        background: rgba(255, 224, 102, 0.1);
+        box-shadow: 0 0 15px rgba(255, 224, 102, 0.3);
+      }
+
+      button.active {
+        background: #ffe066;
+        color: #0a1628;
+      }
+
+      .value {
+        font-family: monospace;
+        color: #ffe066;
+      }
+
+      .themes-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+        margin-top: 2rem;
+      }
+
+      .theme-card {
+        background: rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(255, 224, 102, 0.1);
+        border-radius: 12px;
+        overflow: hidden;
+      }
+
+      .theme-card h3 {
+        padding: 1rem;
+        font-weight: 400;
+        font-size: 1rem;
+        color: #ffe066;
+        border-bottom: 1px solid rgba(255, 224, 102, 0.1);
+      }
+
+      .theme-card animation-fireflies {
+        --fireflies-height: 200px;
+      }
+
+      /* Theme variations */
+      .forest-theme {
+        --fireflies-background: linear-gradient(180deg, #0a2618 0%, #1a4a2e 50%, #0d2f1c 100%);
+      }
+
+      .ocean-theme {
+        --fireflies-background: linear-gradient(180deg, #0a1628 0%, #0d3a5c 50%, #062840 100%);
+      }
+
+      .sunset-theme {
+        --fireflies-background: linear-gradient(180deg, #2d1810 0%, #4a2a1a 50%, #1a0d08 100%);
+      }
+
+      .aurora-theme {
+        --fireflies-background: linear-gradient(180deg, #0a1628 0%, #1a2848 30%, #0d3a40 60%, #0a1628 100%);
+      }
+
+      /* Event log */
+      .event-log {
+        margin-top: 1rem;
+        padding: 1rem;
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 8px;
+        font-family: monospace;
+        font-size: 0.85rem;
+        max-height: 100px;
+        overflow-y: auto;
+      }
+
+      .event-log h4 {
+        margin-bottom: 0.5rem;
+        color: #ffe066;
+      }
+
+      .event-item {
+        padding: 0.25rem 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        color: rgba(255, 255, 255, 0.7);
+      }
+
+      /* Stats display */
+      .stats {
+        display: flex;
+        gap: 2rem;
+        justify-content: center;
+        margin-bottom: 1rem;
+        font-family: monospace;
+        color: rgba(255, 255, 255, 0.7);
+      }
+    </style>
+  </head>
+  <body>
+    <h1>FIREFLIES ANIMATION</h1>
+
+    <div class="demo-container">
+      <div class="stats">
+        <span>Fireflies: <span class="value" id="fireflyCount">50</span></span>
+      </div>
+
+      <animation-fireflies
+        id="mainFireflies"
+        class="main-fireflies"
+        interactive
+      >
+        <div class="overlay-content">
+          <h2>MAGICAL NIGHT</h2>
+          <p>Move your mouse to attract the fireflies</p>
+        </div>
+      </animation-fireflies>
+
+      <div class="controls">
+        <div class="control-group">
+          <label>Count: <span class="value" id="countValue">50</span></label>
+          <input type="range" id="countSlider" min="10" max="200" value="50" />
+        </div>
+
+        <div class="control-group">
+          <label>Glow Size: <span class="value" id="glowValue">20</span>px</label>
+          <input type="range" id="glowSlider" min="5" max="50" value="20" />
+        </div>
+
+        <div class="control-group">
+          <label>Speed: <span class="value" id="speedValue">1.0</span>x</label>
+          <input type="range" id="speedSlider" min="0.1" max="3" step="0.1" value="1" />
+        </div>
+
+        <div class="control-group">
+          <label>Blink Speed: <span class="value" id="blinkValue">1.0</span>x</label>
+          <input type="range" id="blinkSlider" min="0.1" max="3" step="0.1" value="1" />
+        </div>
+
+        <div class="control-group">
+          <label>Mouse Attraction: <span class="value" id="attractionValue">0.5</span></label>
+          <input type="range" id="attractionSlider" min="-1" max="2" step="0.1" value="0.5" />
+        </div>
+
+        <button id="pauseBtn">Pause</button>
+        <button id="resetBtn">Reset</button>
+        <button id="addBtn">Add 10</button>
+        <button id="removeBtn">Remove 10</button>
+      </div>
+
+      <div class="event-log">
+        <h4>Click Events (click on a firefly)</h4>
+        <div id="logContent"></div>
+      </div>
+
+      <h2 style="text-align: center; margin: 3rem 0 1rem; font-weight: 300; color: #ffe066;">Theme Variations</h2>
+
+      <div class="themes-grid">
+        <div class="theme-card">
+          <h3>Forest Night</h3>
+          <animation-fireflies
+            class="forest-theme"
+            count="40"
+            .colors=${['#88ff88', '#66dd66', '#aaff88']}
+          ></animation-fireflies>
+        </div>
+
+        <div class="theme-card">
+          <h3>Ocean Bioluminescence</h3>
+          <animation-fireflies
+            class="ocean-theme"
+            count="60"
+            .colors=${['#00ffff', '#88ffff', '#00aaff', '#66ddff']}
+            glow-size="25"
+          ></animation-fireflies>
+        </div>
+
+        <div class="theme-card">
+          <h3>Sunset Embers</h3>
+          <animation-fireflies
+            class="sunset-theme"
+            count="35"
+            .colors=${['#ff6600', '#ff8800', '#ffaa00', '#ff4400']}
+            speed="0.5"
+          ></animation-fireflies>
+        </div>
+
+        <div class="theme-card">
+          <h3>Aurora Spirits</h3>
+          <animation-fireflies
+            class="aurora-theme"
+            count="45"
+            .colors=${['#00ff88', '#00ffcc', '#88ffff', '#ff88ff', '#aa88ff']}
+            glow-size="30"
+            blink-speed="0.5"
+          ></animation-fireflies>
+        </div>
+
+        <div class="theme-card">
+          <h3>Dense Swarm</h3>
+          <animation-fireflies
+            count="150"
+            glow-size="10"
+            min-size="1"
+            max-size="3"
+            speed="1.5"
+          ></animation-fireflies>
+        </div>
+
+        <div class="theme-card">
+          <h3>Gentle Giants</h3>
+          <animation-fireflies
+            count="15"
+            glow-size="40"
+            min-size="4"
+            max-size="8"
+            speed="0.3"
+            blink-speed="0.3"
+          ></animation-fireflies>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const mainFireflies = document.getElementById('mainFireflies');
+      const countSlider = document.getElementById('countSlider');
+      const glowSlider = document.getElementById('glowSlider');
+      const speedSlider = document.getElementById('speedSlider');
+      const blinkSlider = document.getElementById('blinkSlider');
+      const attractionSlider = document.getElementById('attractionSlider');
+      const pauseBtn = document.getElementById('pauseBtn');
+      const resetBtn = document.getElementById('resetBtn');
+      const addBtn = document.getElementById('addBtn');
+      const removeBtn = document.getElementById('removeBtn');
+      const logContent = document.getElementById('logContent');
+      const fireflyCountDisplay = document.getElementById('fireflyCount');
+
+      // Update count display
+      const updateCountDisplay = () => {
+        fireflyCountDisplay.textContent = mainFireflies.getFireflyCount();
+      };
+
+      // Control handlers
+      countSlider.addEventListener('input', (e) => {
+        const value = parseInt(e.target.value);
+        mainFireflies.count = value;
+        mainFireflies.reset();
+        document.getElementById('countValue').textContent = value;
+        updateCountDisplay();
+      });
+
+      glowSlider.addEventListener('input', (e) => {
+        const value = parseInt(e.target.value);
+        mainFireflies.glowSize = value;
+        document.getElementById('glowValue').textContent = value;
+      });
+
+      speedSlider.addEventListener('input', (e) => {
+        const value = parseFloat(e.target.value);
+        mainFireflies.speed = value;
+        document.getElementById('speedValue').textContent = value.toFixed(1);
+      });
+
+      blinkSlider.addEventListener('input', (e) => {
+        const value = parseFloat(e.target.value);
+        mainFireflies.blinkSpeed = value;
+        document.getElementById('blinkValue').textContent = value.toFixed(1);
+      });
+
+      attractionSlider.addEventListener('input', (e) => {
+        const value = parseFloat(e.target.value);
+        mainFireflies.mouseAttraction = value;
+        document.getElementById('attractionValue').textContent = value.toFixed(1);
+      });
+
+      pauseBtn.addEventListener('click', () => {
+        mainFireflies.toggle();
+        pauseBtn.textContent = mainFireflies.paused ? 'Resume' : 'Pause';
+        pauseBtn.classList.toggle('active', mainFireflies.paused);
+      });
+
+      resetBtn.addEventListener('click', () => {
+        mainFireflies.reset();
+        updateCountDisplay();
+      });
+
+      addBtn.addEventListener('click', () => {
+        mainFireflies.addFireflies(10);
+        updateCountDisplay();
+      });
+
+      removeBtn.addEventListener('click', () => {
+        mainFireflies.removeFireflies(10);
+        updateCountDisplay();
+      });
+
+      // Listen for firefly click events
+      mainFireflies.addEventListener('firefly-click', (e) => {
+        const ff = e.detail.firefly;
+        const logItem = document.createElement('div');
+        logItem.className = 'event-item';
+        logItem.textContent = `Clicked firefly at (${Math.round(ff.x)}, ${Math.round(ff.y)}) - Color: ${ff.color}`;
+        logContent.prepend(logItem);
+
+        // Keep only last 5 entries
+        while (logContent.children.length > 5) {
+          logContent.removeChild(logContent.lastChild);
+        }
+      });
+
+      // Initialize count display
+      setTimeout(updateCountDisplay, 100);
+    </script>
+  </body>
+</html>

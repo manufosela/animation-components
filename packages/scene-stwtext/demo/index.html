@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Star Wars Text Crawl - Demo</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #111;
+      color: #fff;
+    }
+
+    .demo-selector {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 100;
+      background: rgba(0, 0, 0, 0.8);
+      padding: 20px;
+      border-radius: 10px;
+      border: 1px solid #333;
+    }
+
+    .demo-selector h3 {
+      margin-bottom: 15px;
+      color: #ffd700;
+    }
+
+    .demo-selector button {
+      display: block;
+      width: 100%;
+      padding: 10px 15px;
+      margin-bottom: 10px;
+      background: rgba(255, 215, 0, 0.1);
+      border: 1px solid #ffd700;
+      color: #ffd700;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: all 0.2s;
+    }
+
+    .demo-selector button:hover {
+      background: rgba(255, 215, 0, 0.3);
+    }
+
+    .demo-selector button.active {
+      background: #ffd700;
+      color: #000;
+    }
+
+    .demo-container {
+      display: none;
+    }
+
+    .demo-container.active {
+      display: block;
+    }
+
+    scene-stwtext {
+      display: block;
+      height: 100vh;
+    }
+
+    /* Custom Star Wars logo text */
+    .sw-logo {
+      font-family: 'Star Jedi', 'Franklin Gothic Medium', Arial, sans-serif;
+      font-size: 4rem;
+      color: #ffd700;
+      text-align: center;
+      letter-spacing: 0.2em;
+    }
+
+    /* Config panel */
+    .config-panel {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      z-index: 100;
+      background: rgba(0, 0, 0, 0.9);
+      padding: 20px;
+      border-radius: 10px;
+      border: 1px solid #333;
+      max-width: 300px;
+    }
+
+    .config-panel h3 {
+      margin-bottom: 15px;
+      color: #ffd700;
+    }
+
+    .config-panel label {
+      display: block;
+      margin-bottom: 15px;
+      font-size: 0.9rem;
+      color: #aaa;
+    }
+
+    .config-panel input[type="range"] {
+      width: 100%;
+      margin-top: 5px;
+    }
+
+    .config-panel input[type="color"] {
+      width: 100%;
+      height: 30px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .info-text {
+      color: #666;
+      font-size: 0.8rem;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Demo Selector -->
+  <div class="demo-selector">
+    <h3>Select Demo</h3>
+    <button class="active" data-demo="classic">Classic Star Wars</button>
+    <button data-demo="custom">Custom Content</button>
+    <button data-demo="minimal">Minimal</button>
+    <button data-demo="slots">Using Slots</button>
+    <button data-demo="config">Configurable</button>
+  </div>
+
+  <!-- Classic Star Wars Demo -->
+  <div class="demo-container active" id="demo-classic">
+    <scene-stwtext
+      intro-text="A long time ago in a galaxy far, far away...."
+      speed="60"
+      perspective="400"
+      fade-distance="30"
+      intro-duration="4"
+      logo-duration="5"
+      show-stars
+      show-controls
+    >
+      <h1>EPISODE IV</h1>
+      <h1>A NEW HOPE</h1>
+      <p>
+        It is a period of civil war. Rebel spaceships, striking from a hidden base,
+        have won their first victory against the evil Galactic Empire.
+      </p>
+      <p>
+        During the battle, Rebel spies managed to steal secret plans to the Empire's
+        ultimate weapon, the DEATH STAR, an armored space station with enough power
+        to destroy an entire planet.
+      </p>
+      <p>
+        Pursued by the Empire's sinister agents, Princess Leia races home aboard her
+        starship, custodian of the stolen plans that can save her people and restore
+        freedom to the galaxy....
+      </p>
+    </scene-stwtext>
+  </div>
+
+  <!-- Custom Content Demo -->
+  <div class="demo-container" id="demo-custom">
+    <scene-stwtext
+      intro-text="Once upon a time, in a world of web components...."
+      speed="50"
+      perspective="450"
+      show-stars
+      show-controls
+      style="--stwtext-text-color: #00ffcc; --stwtext-intro-color: #ff66cc;"
+    >
+      <h1>THE COMPONENT AWAKENS</h1>
+      <p>
+        In a universe of endless frameworks, a new power has emerged. Web Components,
+        the native solution that works everywhere, has begun its rise.
+      </p>
+      <p>
+        Developers across the galaxy have discovered the power of Lit, a simple yet
+        powerful library for building fast, lightweight web components.
+      </p>
+      <p>
+        This component, scene-stwtext, brings the iconic Star Wars text crawl to any
+        website. No external dependencies required. Just pure HTML, CSS, and JavaScript.
+      </p>
+      <p>
+        May the DOM be with you, always....
+      </p>
+    </scene-stwtext>
+  </div>
+
+  <!-- Minimal Demo -->
+  <div class="demo-container" id="demo-minimal">
+    <scene-stwtext
+      speed="40"
+      show-stars="false"
+      show-controls
+      style="
+        --stwtext-background: linear-gradient(to bottom, #1a1a2e 0%, #16213e 100%);
+        --stwtext-text-color: #fff;
+      "
+    >
+      <h1>MINIMAL STYLE</h1>
+      <p>
+        Sometimes less is more. This demo shows the text crawl without the stars
+        background and with a custom gradient.
+      </p>
+      <p>
+        Perfect for product announcements, project introductions, or any content
+        that needs that dramatic reveal.
+      </p>
+      <p>
+        Customize the colors, speed, and perspective to match your brand.
+      </p>
+    </scene-stwtext>
+  </div>
+
+  <!-- Slots Demo -->
+  <div class="demo-container" id="demo-slots">
+    <scene-stwtext
+      speed="55"
+      perspective="500"
+      intro-duration="3"
+      logo-duration="4"
+      show-stars
+      show-controls
+    >
+      <span slot="intro">Using slots for complete customization....</span>
+      <div slot="logo">
+        <div class="sw-logo">YOUR LOGO</div>
+      </div>
+      <h1>SLOTS DEMO</h1>
+      <p>
+        This demo uses slots for the intro text and logo area. You can insert
+        any HTML content into these slots.
+      </p>
+      <p>
+        The default slot accepts the main crawl text content. Use h1 for titles
+        and p for paragraphs.
+      </p>
+      <p>
+        Slots give you maximum flexibility while the component handles all the
+        animation and 3D perspective magic.
+      </p>
+    </scene-stwtext>
+  </div>
+
+  <!-- Configurable Demo -->
+  <div class="demo-container" id="demo-config">
+    <scene-stwtext
+      id="configurable"
+      intro-text="Customize everything below...."
+      speed="60"
+      perspective="400"
+      fade-distance="30"
+      show-stars
+      show-controls
+    >
+      <h1>CONFIGURABLE</h1>
+      <p>
+        Use the configuration panel on the left to adjust all the parameters
+        in real-time.
+      </p>
+      <p>
+        Change the speed, perspective, colors, and more to see how they affect
+        the animation.
+      </p>
+      <p>
+        Once you find settings you like, you can copy the values to use in
+        your own implementation.
+      </p>
+      <p>
+        The component supports CSS custom properties for easy theming and
+        JavaScript properties for dynamic control.
+      </p>
+    </scene-stwtext>
+
+    <div class="config-panel">
+      <h3>Configuration</h3>
+
+      <label>
+        Speed (seconds): <span id="speed-value">60</span>
+        <input type="range" id="speed-range" min="20" max="120" value="60">
+      </label>
+
+      <label>
+        Perspective: <span id="perspective-value">400</span>px
+        <input type="range" id="perspective-range" min="200" max="800" value="400">
+      </label>
+
+      <label>
+        Fade Distance: <span id="fade-value">30</span>%
+        <input type="range" id="fade-range" min="10" max="50" value="30">
+      </label>
+
+      <label>
+        Text Color
+        <input type="color" id="text-color" value="#ffd700">
+      </label>
+
+      <label>
+        Intro Color
+        <input type="color" id="intro-color" value="#44eeee">
+      </label>
+
+      <p class="info-text">
+        Hover over the crawl to see playback controls.
+        Click Restart to apply changes.
+      </p>
+    </div>
+  </div>
+
+  <script type="module">
+    import '../src/scene-stwtext.js';
+
+    // Demo selector functionality
+    const demoButtons = document.querySelectorAll('.demo-selector button');
+    const demoContainers = document.querySelectorAll('.demo-container');
+
+    demoButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const demoId = button.dataset.demo;
+
+        // Update active button
+        demoButtons.forEach(b => b.classList.remove('active'));
+        button.classList.add('active');
+
+        // Show selected demo
+        demoContainers.forEach(container => {
+          container.classList.remove('active');
+          if (container.id === `demo-${demoId}`) {
+            container.classList.add('active');
+
+            // Restart animation when switching demos
+            const stwtext = container.querySelector('scene-stwtext');
+            if (stwtext) {
+              setTimeout(() => stwtext.restart(), 100);
+            }
+          }
+        });
+
+        // Show/hide config panel
+        const configPanel = document.querySelector('.config-panel');
+        if (configPanel) {
+          configPanel.style.display = demoId === 'config' ? 'block' : 'none';
+        }
+      });
+    });
+
+    // Configuration panel for configurable demo
+    const configurable = document.getElementById('configurable');
+    const configPanel = document.querySelector('.config-panel');
+
+    if (configPanel) {
+      configPanel.style.display = 'none'; // Hide initially
+
+      // Speed
+      document.getElementById('speed-range').addEventListener('input', (e) => {
+        configurable.speed = parseInt(e.target.value);
+        document.getElementById('speed-value').textContent = e.target.value;
+      });
+
+      // Perspective
+      document.getElementById('perspective-range').addEventListener('input', (e) => {
+        configurable.perspective = parseInt(e.target.value);
+        document.getElementById('perspective-value').textContent = e.target.value;
+      });
+
+      // Fade distance
+      document.getElementById('fade-range').addEventListener('input', (e) => {
+        configurable.fadeDistance = parseInt(e.target.value);
+        document.getElementById('fade-value').textContent = e.target.value;
+      });
+
+      // Text color
+      document.getElementById('text-color').addEventListener('input', (e) => {
+        configurable.style.setProperty('--stwtext-text-color', e.target.value);
+      });
+
+      // Intro color
+      document.getElementById('intro-color').addEventListener('input', (e) => {
+        configurable.style.setProperty('--stwtext-intro-color', e.target.value);
+      });
+    }
+  </script>
+</body>
+</html>

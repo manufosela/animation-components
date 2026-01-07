@@ -1,0 +1,45 @@
+{
+  "name": "@manufosela/constellation-sky",
+  "version": "1.0.0",
+  "description": "A Lit 3 web component for animated star constellations with connecting lines using Canvas API",
+  "main": "src/constellation-sky.js",
+  "module": "src/constellation-sky.js",
+  "type": "module",
+  "files": [
+    "src/**/*.js"
+  ],
+  "scripts": {
+    "dev": "web-dev-server --node-resolve --open demo/",
+    "build": "echo 'No build step required'",
+    "test": "web-test-runner test/**/*.test.js --node-resolve --coverage",
+    "test:watch": "web-test-runner test/**/*.test.js --node-resolve --watch",
+    "lint": "eslint src/"
+  },
+  "keywords": [
+    "web-components",
+    "lit",
+    "animation",
+    "constellation",
+    "stars",
+    "canvas",
+    "sky",
+    "particles"
+  ],
+  "author": "manufosela",
+  "license": "MIT",
+  "dependencies": {
+    "lit": "^3.1.0"
+  },
+  "devDependencies": {
+    "@open-wc/testing": "^4.0.0",
+    "@web/dev-server": "^0.4.1",
+    "@web/test-runner": "^0.18.0",
+    "eslint": "^8.56.0"
+  },
+  "customElements": "custom-elements.json",
+  "exports": {
+    ".": {
+      "import": "./src/constellation-sky.js"
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "name": "@manufosela/animation-matrix",
+  "version": "1.0.0",
+  "description": "Matrix digital rain effect web component built with Lit 3 and Canvas API",
+  "main": "src/animation-matrix.js",
+  "module": "src/animation-matrix.js",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./src/animation-matrix.js"
+    }
+  },
+  "files": [
+    "src/**/*.js"
+  ],
+  "scripts": {
+    "dev": "web-dev-server --node-resolve --open demo/",
+    "build": "echo 'No build step required'",
+    "test": "web-test-runner test/**/*.test.js --node-resolve --coverage",
+    "lint": "eslint src/"
+  },
+  "keywords": [
+    "web-component",
+    "lit",
+    "matrix",
+    "digital-rain",
+    "animation",
+    "canvas"
+  ],
+  "author": "manufosela",
+  "license": "MIT",
+  "dependencies": {
+    "lit": "^3.1.0"
+  },
+  "devDependencies": {
+    "@open-wc/testing": "^4.0.0",
+    "@web/dev-server": "^0.4.1",
+    "@web/test-runner": "^0.18.0",
+    "eslint": "^8.56.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/manufosela/animations-components.git",
+    "directory": "packages/animation-matrix"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

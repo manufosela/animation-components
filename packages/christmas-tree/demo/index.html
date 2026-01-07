@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Christmas Tree - Demo</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(to bottom, #0a1628 0%, #1a2a4a 50%, #0d1a2d 100%);
+      min-height: 100vh;
+      color: #fff;
+      padding: 40px 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+      font-size: 2.5rem;
+      text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #8ba;
+      margin-bottom: 40px;
+    }
+
+    .demo-container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .hero-section {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      gap: 30px;
+      margin-bottom: 60px;
+      padding: 40px;
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 100%;
+      background: radial-gradient(ellipse at center bottom, rgba(255, 200, 100, 0.1) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .snowflakes {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .snowflake {
+      position: absolute;
+      color: white;
+      font-size: 1rem;
+      opacity: 0.7;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-10vh) rotate(0deg);
+      }
+      100% {
+        transform: translateY(100vh) rotate(360deg);
+      }
+    }
+
+    .section {
+      margin-bottom: 60px;
+    }
+
+    .section h2 {
+      text-align: center;
+      margin-bottom: 10px;
+      color: #ffd700;
+    }
+
+    .section p {
+      text-align: center;
+      color: #888;
+      margin-bottom: 30px;
+    }
+
+    .demo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+    }
+
+    .demo-card {
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 16px;
+      padding: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      text-align: center;
+    }
+
+    .demo-card h3 {
+      margin-bottom: 20px;
+      color: #8fa;
+    }
+
+    .demo-card christmas-tree {
+      margin: 0 auto;
+    }
+
+    .controls-section {
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 16px;
+      padding: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .controls-grid {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 40px;
+      align-items: start;
+    }
+
+    @media (max-width: 800px) {
+      .controls-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .tree-display {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 400px;
+    }
+
+    .controls-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .control-group label {
+      font-size: 0.9rem;
+      color: #aaa;
+    }
+
+    .control-group input[type="range"] {
+      width: 100%;
+    }
+
+    .control-group input[type="color"] {
+      width: 100%;
+      height: 40px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .checkbox-group input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+    }
+
+    .color-presets {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .color-preset {
+      padding: 8px 16px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.8rem;
+    }
+
+    .color-preset:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .buttons-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      padding: 12px 20px;
+      background: rgba(255, 215, 0, 0.2);
+      border: 1px solid #ffd700;
+      color: #ffd700;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+
+    button:hover {
+      background: rgba(255, 215, 0, 0.3);
+    }
+
+    button.danger {
+      background: rgba(255, 0, 0, 0.2);
+      border-color: #ff6b6b;
+      color: #ff6b6b;
+    }
+
+    button.danger:hover {
+      background: rgba(255, 0, 0, 0.3);
+    }
+
+    /* Ground decoration */
+    .ground {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 30px;
+      background: linear-gradient(to bottom, transparent 0%, rgba(255, 255, 255, 0.1) 100%);
+    }
+
+    .presents {
+      position: absolute;
+      bottom: 30px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .present {
+      width: 40px;
+      height: 35px;
+      background: #c41e3a;
+      border-radius: 4px;
+      position: relative;
+    }
+
+    .present::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: #ffd700;
+      transform: translateY(-50%);
+    }
+
+    .present::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 6px;
+      background: #ffd700;
+      transform: translateX(-50%);
+    }
+
+    .present.blue {
+      background: #1e90ff;
+    }
+
+    .present.green {
+      background: #228b22;
+    }
+  </style>
+</head>
+<body>
+  <h1>Christmas Tree Component</h1>
+  <p class="subtitle">Festive animated SVG Christmas tree with blinking lights</p>
+
+  <div class="demo-container">
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="snowflakes" id="snowflakes"></div>
+      <christmas-tree height="200" light-count="15" blink-speed="600"></christmas-tree>
+      <christmas-tree id="main-tree" height="350" light-count="30" show-star show-ornaments></christmas-tree>
+      <christmas-tree height="200" light-count="15" blink-speed="600"></christmas-tree>
+      <div class="ground"></div>
+    </section>
+
+    <!-- Size Variations -->
+    <section class="section">
+      <h2>Size Variations</h2>
+      <p>Different tree sizes for various layouts</p>
+
+      <div class="demo-grid">
+        <div class="demo-card">
+          <h3>Small (150px)</h3>
+          <christmas-tree height="150" light-count="10"></christmas-tree>
+        </div>
+
+        <div class="demo-card">
+          <h3>Medium (250px)</h3>
+          <christmas-tree height="250" light-count="18"></christmas-tree>
+        </div>
+
+        <div class="demo-card">
+          <h3>Large (350px)</h3>
+          <christmas-tree height="350" light-count="25"></christmas-tree>
+        </div>
+      </div>
+    </section>
+
+    <!-- Style Variations -->
+    <section class="section">
+      <h2>Style Variations</h2>
+      <p>Different decorations and features</p>
+
+      <div class="demo-grid">
+        <div class="demo-card">
+          <h3>Minimal (No Ornaments)</h3>
+          <christmas-tree height="200" show-ornaments="false"></christmas-tree>
+        </div>
+
+        <div class="demo-card">
+          <h3>With Snow</h3>
+          <christmas-tree height="200" show-snow></christmas-tree>
+        </div>
+
+        <div class="demo-card">
+          <h3>No Star</h3>
+          <christmas-tree height="200" show-star="false"></christmas-tree>
+        </div>
+
+        <div class="demo-card">
+          <h3>Full Snow + All Features</h3>
+          <christmas-tree height="200" show-snow show-star show-ornaments light-count="25"></christmas-tree>
+        </div>
+      </div>
+    </section>
+
+    <!-- Color Themes -->
+    <section class="section">
+      <h2>Color Themes</h2>
+      <p>Custom light color schemes</p>
+
+      <div class="demo-grid">
+        <div class="demo-card">
+          <h3>Classic Colors</h3>
+          <christmas-tree id="classic" height="200" light-count="20"></christmas-tree>
+        </div>
+
+        <div class="demo-card">
+          <h3>Warm Lights</h3>
+          <christmas-tree id="warm" height="200" light-count="20"></christmas-tree>
+        </div>
+
+        <div class="demo-card">
+          <h3>Cool Lights</h3>
+          <christmas-tree id="cool" height="200" light-count="20"></christmas-tree>
+        </div>
+
+        <div class="demo-card">
+          <h3>Rainbow</h3>
+          <christmas-tree id="rainbow" height="200" light-count="25"></christmas-tree>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Controls -->
+    <section class="section">
+      <h2>Interactive Configuration</h2>
+      <p>Customize your tree in real-time</p>
+
+      <div class="controls-section">
+        <div class="controls-grid">
+          <div class="tree-display">
+            <christmas-tree id="configurable" height="350" light-count="25"></christmas-tree>
+          </div>
+
+          <div class="controls-panel">
+            <div class="control-group">
+              <label>Height: <span id="height-value">350</span>px</label>
+              <input type="range" id="height-range" min="100" max="500" value="350">
+            </div>
+
+            <div class="control-group">
+              <label>Light Count: <span id="light-value">25</span></label>
+              <input type="range" id="light-range" min="5" max="50" value="25">
+            </div>
+
+            <div class="control-group">
+              <label>Blink Speed: <span id="blink-value">800</span>ms</label>
+              <input type="range" id="blink-range" min="200" max="2000" value="800">
+            </div>
+
+            <div class="control-group">
+              <label>Tree Color</label>
+              <input type="color" id="tree-color" value="#0d5c0d">
+            </div>
+
+            <div class="control-group">
+              <label>Star Color</label>
+              <input type="color" id="star-color" value="#ffd700">
+            </div>
+
+            <div class="control-group">
+              <label>Light Presets</label>
+              <div class="color-presets">
+                <button class="color-preset" data-colors='["#ff0000","#00ff00","#0000ff","#ffff00","#ff00ff","#00ffff"]'>Classic</button>
+                <button class="color-preset" data-colors='["#ffd700","#ff8c00","#ff4500","#ffb347"]'>Warm</button>
+                <button class="color-preset" data-colors='["#00bfff","#87ceeb","#add8e6","#e0ffff"]'>Cool</button>
+                <button class="color-preset" data-colors='["#ffffff"]'>White Only</button>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <label>Features</label>
+              <div class="checkbox-group">
+                <input type="checkbox" id="show-star" checked>
+                <label for="show-star">Show Star</label>
+              </div>
+              <div class="checkbox-group">
+                <input type="checkbox" id="show-ornaments" checked>
+                <label for="show-ornaments">Show Ornaments</label>
+              </div>
+              <div class="checkbox-group">
+                <input type="checkbox" id="show-snow">
+                <label for="show-snow">Show Snow</label>
+              </div>
+            </div>
+
+            <div class="buttons-row">
+              <button id="toggle-lights">Toggle Lights</button>
+              <button id="lights-on">All On</button>
+              <button id="lights-off" class="danger">All Off</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script type="module">
+    import '../src/christmas-tree.js';
+
+    // Set color themes
+    document.getElementById('classic').lightColors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
+    document.getElementById('warm').lightColors = ['#ffd700', '#ff8c00', '#ff4500', '#ffb347', '#ffa500'];
+    document.getElementById('cool').lightColors = ['#00bfff', '#87ceeb', '#add8e6', '#e0ffff', '#b0e0e6'];
+    document.getElementById('rainbow').lightColors = ['#ff0000', '#ff7f00', '#ffff00', '#00ff00', '#0000ff', '#4b0082', '#8f00ff'];
+
+    // Configurable tree controls
+    const configurable = document.getElementById('configurable');
+
+    // Height
+    document.getElementById('height-range').addEventListener('input', (e) => {
+      configurable.height = parseInt(e.target.value);
+      document.getElementById('height-value').textContent = e.target.value;
+    });
+
+    // Light count
+    document.getElementById('light-range').addEventListener('input', (e) => {
+      configurable.lightCount = parseInt(e.target.value);
+      document.getElementById('light-value').textContent = e.target.value;
+    });
+
+    // Blink speed
+    document.getElementById('blink-range').addEventListener('input', (e) => {
+      configurable.blinkSpeed = parseInt(e.target.value);
+      document.getElementById('blink-value').textContent = e.target.value;
+    });
+
+    // Tree color
+    document.getElementById('tree-color').addEventListener('input', (e) => {
+      configurable.style.setProperty('--christmas-tree-color', e.target.value);
+    });
+
+    // Star color
+    document.getElementById('star-color').addEventListener('input', (e) => {
+      configurable.style.setProperty('--christmas-star-color', e.target.value);
+    });
+
+    // Color presets
+    document.querySelectorAll('.color-preset').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const colors = JSON.parse(btn.dataset.colors);
+        configurable.lightColors = colors;
+      });
+    });
+
+    // Feature toggles
+    document.getElementById('show-star').addEventListener('change', (e) => {
+      configurable.showStar = e.target.checked;
+    });
+
+    document.getElementById('show-ornaments').addEventListener('change', (e) => {
+      configurable.showOrnaments = e.target.checked;
+    });
+
+    document.getElementById('show-snow').addEventListener('change', (e) => {
+      configurable.showSnow = e.target.checked;
+    });
+
+    // Button controls
+    document.getElementById('toggle-lights').addEventListener('click', () => {
+      configurable.toggleLights();
+    });
+
+    document.getElementById('lights-on').addEventListener('click', () => {
+      configurable.lightsAllOn();
+    });
+
+    document.getElementById('lights-off').addEventListener('click', () => {
+      configurable.lightsAllOff();
+    });
+
+    // Create snowflakes
+    const snowflakesContainer = document.getElementById('snowflakes');
+    const snowflakeChars = ['*', '+'];
+
+    for (let i = 0; i < 30; i++) {
+      const snowflake = document.createElement('span');
+      snowflake.className = 'snowflake';
+      snowflake.textContent = snowflakeChars[Math.floor(Math.random() * snowflakeChars.length)];
+      snowflake.style.left = `${Math.random() * 100}%`;
+      snowflake.style.animationDuration = `${Math.random() * 3 + 4}s`;
+      snowflake.style.animationDelay = `${Math.random() * 5}s`;
+      snowflake.style.fontSize = `${Math.random() * 10 + 10}px`;
+      snowflakesContainer.appendChild(snowflake);
+    }
+  </script>
+</body>
+</html>

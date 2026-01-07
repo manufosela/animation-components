@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Animation Matrix - Demo</title>
+    <script type="module" src="../src/animation-matrix.js"></script>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: #0a0a0a;
+        min-height: 100vh;
+        color: #fff;
+      }
+
+      h1 {
+        text-align: center;
+        padding: 2rem;
+        font-weight: 300;
+        letter-spacing: 4px;
+        color: #00ff00;
+        text-shadow: 0 0 10px #00ff00;
+      }
+
+      .demo-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 1rem 2rem;
+      }
+
+      .main-matrix {
+        --matrix-height: 400px;
+        border-radius: 8px;
+        overflow: hidden;
+        margin-bottom: 2rem;
+      }
+
+      .controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+        justify-content: center;
+        padding: 1.5rem;
+        background: rgba(0, 255, 0, 0.05);
+        border: 1px solid rgba(0, 255, 0, 0.2);
+        border-radius: 12px;
+        margin-bottom: 2rem;
+      }
+
+      .control-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        min-width: 150px;
+      }
+
+      .control-group label {
+        font-size: 0.875rem;
+        color: #00ff00;
+        opacity: 0.8;
+      }
+
+      input[type='range'] {
+        width: 150px;
+        accent-color: #00ff00;
+      }
+
+      input[type='color'] {
+        width: 50px;
+        height: 30px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      button {
+        padding: 0.75rem 1.5rem;
+        border: 1px solid #00ff00;
+        border-radius: 8px;
+        background: transparent;
+        color: #00ff00;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      button:hover {
+        background: rgba(0, 255, 0, 0.1);
+        box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
+      }
+
+      button.active {
+        background: #00ff00;
+        color: #000;
+      }
+
+      .presets {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+      }
+
+      .preset-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.875rem;
+      }
+
+      .matrix-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+      }
+
+      .matrix-card {
+        background: rgba(0, 0, 0, 0.5);
+        border: 1px solid rgba(0, 255, 0, 0.2);
+        border-radius: 12px;
+        overflow: hidden;
+      }
+
+      .matrix-card h3 {
+        padding: 1rem;
+        font-weight: 400;
+        font-size: 1rem;
+        color: #00ff00;
+        border-bottom: 1px solid rgba(0, 255, 0, 0.2);
+      }
+
+      .matrix-card animation-matrix {
+        --matrix-height: 200px;
+      }
+
+      .blue-matrix {
+        --matrix-background: #000010;
+      }
+
+      .red-matrix {
+        --matrix-background: #100000;
+      }
+
+      .purple-matrix {
+        --matrix-background: #0a000a;
+      }
+
+      /* Value display */
+      .value {
+        font-family: monospace;
+        color: #00ff00;
+      }
+
+      /* Overlay text demo */
+      .overlay-demo {
+        position: relative;
+      }
+
+      .overlay-content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        z-index: 10;
+      }
+
+      .overlay-content h2 {
+        font-size: 3rem;
+        font-weight: 200;
+        letter-spacing: 8px;
+        text-shadow: 0 0 20px #00ff00, 0 0 40px #00ff00;
+        margin-bottom: 1rem;
+      }
+
+      .overlay-content p {
+        font-size: 1.2rem;
+        opacity: 0.8;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>MATRIX DIGITAL RAIN</h1>
+
+    <div class="demo-container">
+      <div class="overlay-demo">
+        <animation-matrix id="mainMatrix" class="main-matrix"></animation-matrix>
+        <div class="overlay-content">
+          <h2>WAKE UP</h2>
+          <p>The Matrix has you...</p>
+        </div>
+      </div>
+
+      <div class="presets">
+        <button class="preset-btn" data-preset="classic">Classic Green</button>
+        <button class="preset-btn" data-preset="blue">Blue Pill</button>
+        <button class="preset-btn" data-preset="red">Red Pill</button>
+        <button class="preset-btn" data-preset="binary">Binary</button>
+        <button class="preset-btn" data-preset="emoji">Emoji Rain</button>
+        <button class="preset-btn" data-preset="numbers">Numbers Only</button>
+      </div>
+
+      <div class="controls">
+        <div class="control-group">
+          <label>Font Size: <span class="value" id="fontSizeValue">14</span>px</label>
+          <input type="range" id="fontSizeSlider" min="8" max="30" value="14" />
+        </div>
+
+        <div class="control-group">
+          <label>Speed: <span class="value" id="speedValue">1.0</span>x</label>
+          <input type="range" id="speedSlider" min="0.1" max="3" step="0.1" value="1" />
+        </div>
+
+        <div class="control-group">
+          <label>Density: <span class="value" id="densityValue">1.0</span></label>
+          <input type="range" id="densitySlider" min="0.3" max="2" step="0.1" value="1" />
+        </div>
+
+        <div class="control-group">
+          <label>Trail Length: <span class="value" id="trailValue">20</span></label>
+          <input type="range" id="trailSlider" min="5" max="40" value="20" />
+        </div>
+
+        <div class="control-group">
+          <label>Fade: <span class="value" id="fadeValue">0.05</span></label>
+          <input type="range" id="fadeSlider" min="0.01" max="0.2" step="0.01" value="0.05" />
+        </div>
+
+        <div class="control-group">
+          <label>Main Color</label>
+          <input type="color" id="colorPicker" value="#00ff00" />
+        </div>
+
+        <div class="control-group">
+          <label>Highlight Color</label>
+          <input type="color" id="highlightPicker" value="#ffffff" />
+        </div>
+
+        <button id="pauseBtn">Pause</button>
+        <button id="resetBtn">Reset</button>
+      </div>
+
+      <h2 style="text-align: center; margin: 2rem 0; font-weight: 300;">Theme Variations</h2>
+
+      <div class="matrix-grid">
+        <div class="matrix-card">
+          <h3>Blue Code</h3>
+          <animation-matrix
+            class="blue-matrix"
+            color="#00aaff"
+            highlight-color="#ffffff"
+          ></animation-matrix>
+        </div>
+
+        <div class="matrix-card">
+          <h3>Red Alert</h3>
+          <animation-matrix
+            class="red-matrix"
+            color="#ff3333"
+            highlight-color="#ffff00"
+          ></animation-matrix>
+        </div>
+
+        <div class="matrix-card">
+          <h3>Purple Haze</h3>
+          <animation-matrix
+            class="purple-matrix"
+            color="#aa00ff"
+            highlight-color="#ff88ff"
+          ></animation-matrix>
+        </div>
+
+        <div class="matrix-card">
+          <h3>Slow Motion</h3>
+          <animation-matrix speed="0.3" trail-length="30"></animation-matrix>
+        </div>
+
+        <div class="matrix-card">
+          <h3>High Speed</h3>
+          <animation-matrix speed="2.5" trail-length="10"></animation-matrix>
+        </div>
+
+        <div class="matrix-card">
+          <h3>Dense Code</h3>
+          <animation-matrix density="2" font-size="10"></animation-matrix>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const mainMatrix = document.getElementById('mainMatrix');
+      const fontSizeSlider = document.getElementById('fontSizeSlider');
+      const speedSlider = document.getElementById('speedSlider');
+      const densitySlider = document.getElementById('densitySlider');
+      const trailSlider = document.getElementById('trailSlider');
+      const fadeSlider = document.getElementById('fadeSlider');
+      const colorPicker = document.getElementById('colorPicker');
+      const highlightPicker = document.getElementById('highlightPicker');
+      const pauseBtn = document.getElementById('pauseBtn');
+      const resetBtn = document.getElementById('resetBtn');
+
+      // Presets
+      const presets = {
+        classic: {
+          color: '#00ff00',
+          highlightColor: '#ffffff',
+          characters: 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+        },
+        blue: {
+          color: '#00aaff',
+          highlightColor: '#88ddff',
+          characters: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*',
+        },
+        red: {
+          color: '#ff3333',
+          highlightColor: '#ffff00',
+          characters: 'WARNING DANGER ALERT ERROR SYSTEM FAILURE ',
+        },
+        binary: {
+          color: '#00ff00',
+          highlightColor: '#88ff88',
+          characters: '01',
+        },
+        emoji: {
+          color: '#ffff00',
+          highlightColor: '#ffffff',
+          characters: '🔥💧🌟⭐✨🎮🎯🎲🎪🎭🎨🎬🎤🎧🎸🎹🎺🎻🎼🎵🎶',
+        },
+        numbers: {
+          color: '#00ffaa',
+          highlightColor: '#ffffff',
+          characters: '0123456789+-*/=<>[]{}()',
+        },
+      };
+
+      document.querySelectorAll('.preset-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const preset = presets[btn.dataset.preset];
+          if (preset) {
+            mainMatrix.color = preset.color;
+            mainMatrix.highlightColor = preset.highlightColor;
+            mainMatrix.setCharacters(preset.characters);
+            colorPicker.value = preset.color;
+            highlightPicker.value = preset.highlightColor;
+          }
+        });
+      });
+
+      // Control handlers
+      fontSizeSlider.addEventListener('input', (e) => {
+        const value = parseInt(e.target.value);
+        mainMatrix.fontSize = value;
+        document.getElementById('fontSizeValue').textContent = value;
+      });
+
+      speedSlider.addEventListener('input', (e) => {
+        const value = parseFloat(e.target.value);
+        mainMatrix.speed = value;
+        document.getElementById('speedValue').textContent = value.toFixed(1);
+      });
+
+      densitySlider.addEventListener('input', (e) => {
+        const value = parseFloat(e.target.value);
+        mainMatrix.density = value;
+        document.getElementById('densityValue').textContent = value.toFixed(1);
+      });
+
+      trailSlider.addEventListener('input', (e) => {
+        const value = parseInt(e.target.value);
+        mainMatrix.trailLength = value;
+        document.getElementById('trailValue').textContent = value;
+      });
+
+      fadeSlider.addEventListener('input', (e) => {
+        const value = parseFloat(e.target.value);
+        mainMatrix.fadeOpacity = value;
+        document.getElementById('fadeValue').textContent = value.toFixed(2);
+      });
+
+      colorPicker.addEventListener('input', (e) => {
+        mainMatrix.color = e.target.value;
+      });
+
+      highlightPicker.addEventListener('input', (e) => {
+        mainMatrix.highlightColor = e.target.value;
+      });
+
+      pauseBtn.addEventListener('click', () => {
+        mainMatrix.toggle();
+        pauseBtn.textContent = mainMatrix.paused ? 'Resume' : 'Pause';
+        pauseBtn.classList.toggle('active', mainMatrix.paused);
+      });
+
+      resetBtn.addEventListener('click', () => {
+        mainMatrix.reset();
+      });
+
+      // Listen for animation events
+      mainMatrix.addEventListener('animation-start', () => {
+        console.log('Matrix animation started');
+      });
+
+      mainMatrix.addEventListener('animation-stop', () => {
+        console.log('Matrix animation stopped');
+      });
+    </script>
+  </body>
+</html>

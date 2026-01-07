@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>@manufosela/animations-components</title>
+  <style>
+    :root {
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --bg: #0f172a;
+      --bg-card: #1e293b;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #334155;
+      --success: #22c55e;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 2rem;
+    }
+    .container { max-width: 1200px; margin: 0 auto; }
+    header {
+      text-align: center;
+      padding: 3rem 0;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 3rem;
+    }
+    h1 {
+      font-size: 2.5rem;
+      background: linear-gradient(135deg, var(--primary), #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1rem;
+    }
+    .subtitle { color: var(--text-muted); font-size: 1.2rem; }
+    .stats {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 1.5rem;
+    }
+    .stat {
+      text-align: center;
+      padding: 1rem 2rem;
+      background: var(--bg-card);
+      border-radius: 0.5rem;
+    }
+    .stat-value { font-size: 2rem; font-weight: bold; color: var(--primary); }
+    .stat-label { color: var(--text-muted); font-size: 0.875rem; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 1.5rem;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    }
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .card-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, var(--primary), #a855f7);
+      border-radius: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+    .card-title { font-size: 1.25rem; font-weight: 600; }
+    .card-desc { color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem; }
+    .card-links {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: background 0.2s;
+    }
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+    .btn-primary:hover { background: var(--primary-dark); }
+    .btn-outline {
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+    .btn-outline:hover { background: var(--bg); }
+    footer {
+      text-align: center;
+      padding: 3rem 0;
+      margin-top: 3rem;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+    }
+    footer a { color: var(--primary); text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>@manufosela/animations-components</h1>
+      <p class="subtitle">Beautiful animation web components built with Lit 3</p>
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-value">10</div>
+          <div class="stat-label">Components</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">Lit 3</div>
+          <div class="stat-label">Framework</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">MIT</div>
+          <div class="stat-label">License</div>
+        </div>
+      </div>
+    </header>
+
+    <div class="grid">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">💥</div>
+          <h2 class="card-title">animation-explosion</h2>
+        </div>
+        <p class="card-desc">Canvas-based particle explosion effects triggered on click or custom events. Fully configurable particle count, colors, and physics.</p>
+        <div class="card-links">
+          <a href="packages/animation-explosion/demo/" class="btn btn-primary">Demo</a>
+          <a href="https://github.com/manufosela/animations-components/tree/main/packages/animation-explosion" class="btn btn-outline">Source</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">✨</div>
+          <h2 class="card-title">constellation-sky</h2>
+        </div>
+        <p class="card-desc">Animated star field with constellation-like connecting lines. Perfect for backgrounds and hero sections.</p>
+        <div class="card-links">
+          <a href="packages/constellation-sky/demo/" class="btn btn-primary">Demo</a>
+          <a href="https://github.com/manufosela/animations-components/tree/main/packages/constellation-sky" class="btn btn-outline">Source</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">🎄</div>
+          <h2 class="card-title">christmas-tree</h2>
+        </div>
+        <p class="card-desc">SVG-based festive Christmas tree with animated blinking lights and optional star topper.</p>
+        <div class="card-links">
+          <a href="packages/christmas-tree/demo/" class="btn btn-primary">Demo</a>
+          <a href="https://github.com/manufosela/animations-components/tree/main/packages/christmas-tree" class="btn btn-outline">Source</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">🚀</div>
+          <h2 class="card-title">scene-stwtext</h2>
+        </div>
+        <p class="card-desc">Star Wars style opening crawl text animation with CSS 3D perspective effects.</p>
+        <div class="card-links">
+          <a href="packages/scene-stwtext/demo/" class="btn btn-primary">Demo</a>
+          <a href="https://github.com/manufosela/animations-components/tree/main/packages/scene-stwtext" class="btn btn-outline">Source</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">🌠</div>
+          <h2 class="card-title">animation-shootingstar</h2>
+        </div>
+        <p class="card-desc">Canvas-based shooting stars with customizable frequency, speed, and trail effects.</p>
+        <div class="card-links">
+          <a href="packages/animation-shootingstar/demo/" class="btn btn-primary">Demo</a>
+          <a href="https://github.com/manufosela/animations-components/tree/main/packages/animation-shootingstar" class="btn btn-outline">Source</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">🪐</div>
+          <h2 class="card-title">animation-solarsystem</h2>
+        </div>
+        <p class="card-desc">SVG animated solar system with orbiting planets, customizable scale and speed.</p>
+        <div class="card-links">
+          <a href="packages/animation-solarsystem/demo/" class="btn btn-primary">Demo</a>
+          <a href="https://github.com/manufosela/animations-components/tree/main/packages/animation-solarsystem" class="btn btn-outline">Source</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">🕐</div>
+          <h2 class="card-title">animation-handclock</h2>
+        </div>
+        <p class="card-desc">Analog clock with SVG hands, supporting multiple timezones and themes.</p>
+        <div class="card-links">
+          <a href="packages/animation-handclock/demo/" class="btn btn-primary">Demo</a>
+          <a href="https://github.com/manufosela/animations-components/tree/main/packages/animation-handclock" class="btn btn-outline">Source</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">🏔️</div>
+          <h2 class="card-title">animation-paralax</h2>
+        </div>
+        <p class="card-desc">Parallax scrolling effects with multiple layers moving at different speeds.</p>
+        <div class="card-links">
+          <a href="packages/animation-paralax/demo/" class="btn btn-primary">Demo</a>
+          <a href="https://github.com/manufosela/animations-components/tree/main/packages/animation-paralax" class="btn btn-outline">Source</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">🟢</div>
+          <h2 class="card-title">animation-matrix</h2>
+        </div>
+        <p class="card-desc">Matrix digital rain effect with falling characters, customizable colors and speed.</p>
+        <div class="card-links">
+          <a href="packages/animation-matrix/demo/" class="btn btn-primary">Demo</a>
+          <a href="https://github.com/manufosela/animations-components/tree/main/packages/animation-matrix" class="btn btn-outline">Source</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">🪲</div>
+          <h2 class="card-title">animation-fireflies</h2>
+        </div>
+        <p class="card-desc">Floating firefly particles with glowing effects, perfect for magical atmospheres.</p>
+        <div class="card-links">
+          <a href="packages/animation-fireflies/demo/" class="btn btn-primary">Demo</a>
+          <a href="https://github.com/manufosela/animations-components/tree/main/packages/animation-fireflies" class="btn btn-outline">Source</a>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>Created by <a href="https://github.com/manufosela">@manufosela</a></p>
+      <p style="margin-top: 0.5rem;">Built with Lit 3 | pnpm workspaces | Changesets</p>
+    </footer>
+  </div>
+</body>
+</html>

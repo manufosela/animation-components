@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Animation Shootingstar - Demo</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0a0a15;
+      color: #fff;
+    }
+
+    .hero {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero animation-shootingstar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      color: #aaa;
+      margin-bottom: 2rem;
+    }
+
+    .hero .cta-btn {
+      padding: 15px 40px;
+      font-size: 1.1rem;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border: none;
+      color: white;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .hero .cta-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+    }
+
+    .demo-sections {
+      padding: 60px 20px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .section {
+      margin-bottom: 80px;
+    }
+
+    .section h2 {
+      text-align: center;
+      margin-bottom: 10px;
+      color: #fffacd;
+      font-size: 1.8rem;
+    }
+
+    .section p {
+      text-align: center;
+      color: #888;
+      margin-bottom: 30px;
+    }
+
+    .demo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 30px;
+    }
+
+    .demo-card {
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .demo-card h3 {
+      padding: 15px 20px;
+      background: rgba(255, 255, 255, 0.05);
+      margin: 0;
+      font-size: 1rem;
+      color: #add8e6;
+    }
+
+    .demo-card animation-shootingstar {
+      display: block;
+      height: 300px;
+    }
+
+    /* Interactive Demo */
+    .interactive-section {
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .interactive-section animation-shootingstar {
+      height: 400px;
+    }
+
+    .controls-panel {
+      padding: 25px;
+      background: rgba(0, 0, 0, 0.3);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 25px;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-width: 150px;
+    }
+
+    .control-group label {
+      font-size: 0.85rem;
+      color: #aaa;
+    }
+
+    .control-group input[type="range"] {
+      width: 100%;
+    }
+
+    .control-group input[type="color"] {
+      width: 100%;
+      height: 35px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .buttons-group {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    button {
+      padding: 10px 20px;
+      background: rgba(173, 216, 230, 0.2);
+      border: 1px solid #add8e6;
+      color: #add8e6;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+
+    button:hover {
+      background: rgba(173, 216, 230, 0.3);
+    }
+
+    button.primary {
+      background: rgba(255, 250, 205, 0.2);
+      border-color: #fffacd;
+      color: #fffacd;
+    }
+
+    button.primary:hover {
+      background: rgba(255, 250, 205, 0.3);
+    }
+
+    button.danger {
+      background: rgba(255, 107, 107, 0.2);
+      border-color: #ff6b6b;
+      color: #ff6b6b;
+    }
+
+    button.danger:hover {
+      background: rgba(255, 107, 107, 0.3);
+    }
+
+    .event-log {
+      background: rgba(0, 0, 0, 0.4);
+      padding: 15px;
+      border-radius: 8px;
+      max-height: 120px;
+      overflow-y: auto;
+      font-family: monospace;
+      font-size: 0.8rem;
+      min-width: 200px;
+    }
+
+    .event-log p {
+      margin: 5px 0;
+      color: #add8e6;
+      text-align: left;
+    }
+
+    .color-presets {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .color-preset {
+      padding: 6px 12px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 4px;
+      color: white;
+      cursor: pointer;
+      font-size: 0.75rem;
+    }
+
+    .color-preset:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Theme variants */
+    .theme-warm {
+      --shootingstar-background: linear-gradient(to bottom, #1a0a00 0%, #3d1a00 50%, #2d1000 100%);
+    }
+
+    .theme-ocean {
+      --shootingstar-background: linear-gradient(to bottom, #000428 0%, #004e92 100%);
+    }
+
+    .theme-aurora {
+      --shootingstar-background: linear-gradient(to bottom, #0f0c29 0%, #1a3a4a 50%, #0d2d0d 100%);
+    }
+
+    .wish-counter {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(0, 0, 0, 0.8);
+      padding: 15px 25px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 250, 205, 0.3);
+      text-align: center;
+      z-index: 100;
+    }
+
+    .wish-counter .count {
+      font-size: 2rem;
+      color: #fffacd;
+    }
+
+    .wish-counter .label {
+      font-size: 0.8rem;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <!-- Wish Counter -->
+  <div class="wish-counter">
+    <div class="count" id="wish-count">0</div>
+    <div class="label">Shooting Stars</div>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <animation-shootingstar
+      id="hero-stars"
+      frequency="1500"
+      speed="12"
+      trail-length="30"
+      max-stars="6"
+      trigger-on-click
+    ></animation-shootingstar>
+    <div class="hero-content">
+      <h1>Shooting Stars</h1>
+      <p>Click anywhere to create a shooting star and make a wish!</p>
+      <button class="cta-btn" onclick="document.getElementById('hero-stars').trigger()">
+        Trigger Star
+      </button>
+    </div>
+  </section>
+
+  <!-- Demo Sections -->
+  <div class="demo-sections">
+    <!-- Theme Variations -->
+    <section class="section">
+      <h2>Theme Variations</h2>
+      <p>Different background themes for various moods</p>
+
+      <div class="demo-grid">
+        <div class="demo-card">
+          <h3>Default (Purple Night)</h3>
+          <animation-shootingstar
+            frequency="2500"
+            speed="10"
+            trail-length="25"
+          ></animation-shootingstar>
+        </div>
+
+        <div class="demo-card">
+          <h3>Warm Desert Night</h3>
+          <animation-shootingstar
+            class="theme-warm"
+            frequency="3000"
+            speed="8"
+            trail-length="30"
+            id="warm-theme"
+          ></animation-shootingstar>
+        </div>
+
+        <div class="demo-card">
+          <h3>Ocean Night</h3>
+          <animation-shootingstar
+            class="theme-ocean"
+            frequency="2000"
+            speed="12"
+            trail-length="20"
+            id="ocean-theme"
+          ></animation-shootingstar>
+        </div>
+
+        <div class="demo-card">
+          <h3>Aurora Sky</h3>
+          <animation-shootingstar
+            class="theme-aurora"
+            frequency="2500"
+            speed="9"
+            trail-length="28"
+            id="aurora-theme"
+          ></animation-shootingstar>
+        </div>
+      </div>
+    </section>
+
+    <!-- Speed Variations -->
+    <section class="section">
+      <h2>Speed Variations</h2>
+      <p>Different speeds for different effects</p>
+
+      <div class="demo-grid">
+        <div class="demo-card">
+          <h3>Slow and Majestic</h3>
+          <animation-shootingstar
+            frequency="4000"
+            speed="5"
+            trail-length="40"
+            max-stars="3"
+          ></animation-shootingstar>
+        </div>
+
+        <div class="demo-card">
+          <h3>Fast Meteor Shower</h3>
+          <animation-shootingstar
+            frequency="800"
+            speed="18"
+            trail-length="15"
+            max-stars="8"
+          ></animation-shootingstar>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Configuration -->
+    <section class="section">
+      <h2>Interactive Configuration</h2>
+      <p>Customize all parameters in real-time</p>
+
+      <div class="interactive-section">
+        <animation-shootingstar
+          id="configurable"
+          frequency="2000"
+          speed="10"
+          trail-length="25"
+          max-stars="5"
+          trigger-on-click
+        ></animation-shootingstar>
+
+        <div class="controls-panel">
+          <div class="control-group">
+            <label>Frequency: <span id="freq-value">2000</span>ms</label>
+            <input type="range" id="freq-range" min="500" max="5000" value="2000">
+          </div>
+
+          <div class="control-group">
+            <label>Speed: <span id="speed-value">10</span></label>
+            <input type="range" id="speed-range" min="3" max="25" value="10">
+          </div>
+
+          <div class="control-group">
+            <label>Trail Length: <span id="trail-value">25</span></label>
+            <input type="range" id="trail-range" min="10" max="50" value="25">
+          </div>
+
+          <div class="control-group">
+            <label>Max Stars: <span id="max-value">5</span></label>
+            <input type="range" id="max-range" min="1" max="15" value="5">
+          </div>
+
+          <div class="control-group">
+            <label>Color Presets</label>
+            <div class="color-presets">
+              <button class="color-preset" data-colors='["#ffffff","#fffacd","#e6e6fa","#add8e6","#ffdab9"]'>Default</button>
+              <button class="color-preset" data-colors='["#ffd700","#ff8c00","#ff4500"]'>Warm</button>
+              <button class="color-preset" data-colors='["#00ffff","#00bfff","#87ceeb"]'>Cool</button>
+              <button class="color-preset" data-colors='["#ff69b4","#ff1493","#da70d6"]'>Pink</button>
+              <button class="color-preset" data-colors='["#00ff00","#32cd32","#7cfc00"]'>Green</button>
+            </div>
+          </div>
+
+          <div class="control-group buttons-group">
+            <button class="primary" id="trigger-btn">Trigger Star</button>
+            <button id="toggle-btn">Pause</button>
+            <button class="danger" id="clear-btn">Clear All</button>
+          </div>
+
+          <div class="event-log" id="event-log">
+            <p style="color: #666;">Events will appear here...</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- No Background Stars -->
+    <section class="section">
+      <h2>Minimal Mode</h2>
+      <p>Without background stars for cleaner look</p>
+
+      <div class="demo-card" style="max-width: 800px; margin: 0 auto;">
+        <h3>Shooting Stars Only</h3>
+        <animation-shootingstar
+          show-background-stars="false"
+          frequency="1500"
+          speed="12"
+          trail-length="35"
+          style="--shootingstar-background: #000;"
+        ></animation-shootingstar>
+      </div>
+    </section>
+  </div>
+
+  <script type="module">
+    import '../src/animation-shootingstar.js';
+
+    let wishCount = 0;
+
+    // Update wish counter for all shooting stars
+    document.querySelectorAll('animation-shootingstar').forEach(el => {
+      el.addEventListener('star-created', () => {
+        wishCount++;
+        document.getElementById('wish-count').textContent = wishCount;
+      });
+    });
+
+    // Custom colors for themed demos
+    document.getElementById('warm-theme').colors = ['#ffd700', '#ff8c00', '#ff4500', '#ffb347'];
+    document.getElementById('ocean-theme').colors = ['#00ffff', '#00bfff', '#87ceeb', '#e0ffff'];
+    document.getElementById('aurora-theme').colors = ['#00ff00', '#00ffff', '#ff00ff', '#ffff00'];
+
+    // Configurable demo controls
+    const configurable = document.getElementById('configurable');
+    const eventLog = document.getElementById('event-log');
+
+    // Frequency
+    document.getElementById('freq-range').addEventListener('input', (e) => {
+      configurable.frequency = parseInt(e.target.value);
+      document.getElementById('freq-value').textContent = e.target.value;
+    });
+
+    // Speed
+    document.getElementById('speed-range').addEventListener('input', (e) => {
+      configurable.speed = parseInt(e.target.value);
+      document.getElementById('speed-value').textContent = e.target.value;
+    });
+
+    // Trail length
+    document.getElementById('trail-range').addEventListener('input', (e) => {
+      configurable.trailLength = parseInt(e.target.value);
+      document.getElementById('trail-value').textContent = e.target.value;
+    });
+
+    // Max stars
+    document.getElementById('max-range').addEventListener('input', (e) => {
+      configurable.maxStars = parseInt(e.target.value);
+      document.getElementById('max-value').textContent = e.target.value;
+    });
+
+    // Color presets
+    document.querySelectorAll('.color-preset').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const colors = JSON.parse(btn.dataset.colors);
+        configurable.colors = colors;
+        logEvent(`Colors changed: ${colors.length} colors`);
+      });
+    });
+
+    // Trigger button
+    document.getElementById('trigger-btn').addEventListener('click', () => {
+      configurable.trigger();
+    });
+
+    // Toggle pause
+    const toggleBtn = document.getElementById('toggle-btn');
+    toggleBtn.addEventListener('click', () => {
+      if (configurable.paused) {
+        configurable.resume();
+        toggleBtn.textContent = 'Pause';
+      } else {
+        configurable.pause();
+        toggleBtn.textContent = 'Resume';
+      }
+    });
+
+    // Clear button
+    document.getElementById('clear-btn').addEventListener('click', () => {
+      configurable.clear();
+      logEvent('All stars cleared');
+    });
+
+    // Event logging
+    configurable.addEventListener('star-created', (e) => {
+      logEvent(`Star created at (${Math.round(e.detail.x)}, ${Math.round(e.detail.y)})`);
+    });
+
+    configurable.addEventListener('star-faded', () => {
+      logEvent('Star faded out');
+    });
+
+    function logEvent(message) {
+      const p = document.createElement('p');
+      p.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+      eventLog.insertBefore(p, eventLog.firstChild);
+
+      // Keep only last 10 events
+      while (eventLog.children.length > 10) {
+        eventLog.removeChild(eventLog.lastChild);
+      }
+    }
+  </script>
+</body>
+</html>

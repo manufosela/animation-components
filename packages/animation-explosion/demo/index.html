@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Animation Explosion - Demo</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      min-height: 100vh;
+      color: #fff;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #888;
+      margin-bottom: 40px;
+    }
+
+    .demo-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .demo-card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .demo-card h2 {
+      margin-top: 0;
+      font-size: 1.2rem;
+      color: #4ecdc4;
+    }
+
+    .demo-card p {
+      color: #aaa;
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+    }
+
+    animation-explosion {
+      display: block;
+      height: 200px;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 8px;
+    }
+
+    .demo-button {
+      padding: 15px 30px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .demo-button:hover {
+      transform: scale(1.05);
+    }
+
+    .demo-button:active {
+      transform: scale(0.95);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+
+    .btn-success {
+      background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+      color: white;
+    }
+
+    .btn-warning {
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      color: white;
+    }
+
+    .btn-fire {
+      background: linear-gradient(135deg, #f12711 0%, #f5af19 100%);
+      color: white;
+    }
+
+    .controls {
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .controls label {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 0.9rem;
+    }
+
+    .controls input[type="range"] {
+      width: 100%;
+      margin-top: 5px;
+    }
+
+    .event-log {
+      margin-top: 20px;
+      padding: 10px;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 8px;
+      font-family: monospace;
+      font-size: 0.8rem;
+      max-height: 100px;
+      overflow-y: auto;
+    }
+
+    .event-log p {
+      margin: 5px 0;
+      color: #4ecdc4;
+    }
+
+    #programmatic-demo {
+      text-align: center;
+    }
+
+    .trigger-buttons {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 15px;
+    }
+
+    .trigger-btn {
+      padding: 8px 16px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: white;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .trigger-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+  </style>
+</head>
+<body>
+  <h1>Animation Explosion Component</h1>
+  <p class="subtitle">Click anywhere inside the demo areas to trigger explosions</p>
+
+  <div class="demo-container">
+    <!-- Basic Demo -->
+    <div class="demo-card">
+      <h2>Basic Explosion</h2>
+      <p>Default settings - click anywhere to explode</p>
+      <animation-explosion>
+        <button class="demo-button btn-primary">Click Me!</button>
+      </animation-explosion>
+    </div>
+
+    <!-- Custom Colors Demo -->
+    <div class="demo-card">
+      <h2>Custom Colors</h2>
+      <p>Green/blue color scheme with more particles</p>
+      <animation-explosion
+        id="custom-colors"
+        particle-count="50"
+        duration="2000">
+        <button class="demo-button btn-success">Eco Explosion</button>
+      </animation-explosion>
+    </div>
+
+    <!-- High Gravity Demo -->
+    <div class="demo-card">
+      <h2>High Gravity</h2>
+      <p>Particles fall quickly with high gravity</p>
+      <animation-explosion
+        particle-count="40"
+        gravity="0.3"
+        spread="180">
+        <button class="demo-button btn-warning">Heavy Burst</button>
+      </animation-explosion>
+    </div>
+
+    <!-- Fire Explosion Demo -->
+    <div class="demo-card">
+      <h2>Fire Explosion</h2>
+      <p>Red/orange/yellow fire colors</p>
+      <animation-explosion
+        id="fire-explosion"
+        particle-count="60"
+        gravity="0.05"
+        duration="2500">
+        <button class="demo-button btn-fire">Fire!</button>
+      </animation-explosion>
+    </div>
+
+    <!-- Configurable Demo -->
+    <div class="demo-card">
+      <h2>Configurable</h2>
+      <p>Adjust settings with the controls below</p>
+      <animation-explosion id="configurable">
+        <button class="demo-button btn-primary">Test It</button>
+      </animation-explosion>
+      <div class="controls">
+        <label>
+          Particle Count: <span id="particle-value">30</span>
+          <input type="range" id="particle-range" min="10" max="100" value="30">
+        </label>
+        <label>
+          Gravity: <span id="gravity-value">0.1</span>
+          <input type="range" id="gravity-range" min="0" max="0.5" step="0.05" value="0.1">
+        </label>
+        <label>
+          Spread: <span id="spread-value">360</span>
+          <input type="range" id="spread-range" min="30" max="360" value="360">
+        </label>
+      </div>
+    </div>
+
+    <!-- Event Logging Demo -->
+    <div class="demo-card">
+      <h2>Event Logging</h2>
+      <p>Watch events fire in the log below</p>
+      <animation-explosion id="event-demo">
+        <button class="demo-button btn-success">Trigger</button>
+      </animation-explosion>
+      <div class="event-log" id="event-log"></div>
+    </div>
+
+    <!-- Programmatic Trigger Demo -->
+    <div class="demo-card">
+      <h2>Programmatic Trigger</h2>
+      <p>Trigger explosions via JavaScript</p>
+      <animation-explosion id="programmatic-demo" trigger-on-click="false">
+        <p style="color: #888;">Click buttons below to trigger</p>
+      </animation-explosion>
+      <div class="trigger-buttons">
+        <button class="trigger-btn" onclick="triggerAt('top-left')">Top Left</button>
+        <button class="trigger-btn" onclick="triggerAt('center')">Center</button>
+        <button class="trigger-btn" onclick="triggerAt('bottom-right')">Bottom Right</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import '../src/animation-explosion.js';
+
+    // Set custom colors for specific demos
+    document.getElementById('custom-colors').colors = ['#00ff87', '#60efff', '#00b4d8', '#0077b6'];
+    document.getElementById('fire-explosion').colors = ['#ff4500', '#ff6b35', '#f7931e', '#ffc107', '#ffeb3b'];
+
+    // Configurable demo
+    const configurable = document.getElementById('configurable');
+    const particleRange = document.getElementById('particle-range');
+    const gravityRange = document.getElementById('gravity-range');
+    const spreadRange = document.getElementById('spread-range');
+
+    particleRange.addEventListener('input', (e) => {
+      configurable.particleCount = parseInt(e.target.value);
+      document.getElementById('particle-value').textContent = e.target.value;
+    });
+
+    gravityRange.addEventListener('input', (e) => {
+      configurable.gravity = parseFloat(e.target.value);
+      document.getElementById('gravity-value').textContent = e.target.value;
+    });
+
+    spreadRange.addEventListener('input', (e) => {
+      configurable.spread = parseInt(e.target.value);
+      document.getElementById('spread-value').textContent = e.target.value;
+    });
+
+    // Event logging demo
+    const eventDemo = document.getElementById('event-demo');
+    const eventLog = document.getElementById('event-log');
+
+    eventDemo.addEventListener('explosion-start', (e) => {
+      const p = document.createElement('p');
+      p.textContent = `[${new Date().toLocaleTimeString()}] explosion-start at (${Math.round(e.detail.x)}, ${Math.round(e.detail.y)})`;
+      eventLog.appendChild(p);
+      eventLog.scrollTop = eventLog.scrollHeight;
+    });
+
+    eventDemo.addEventListener('explosion-end', () => {
+      const p = document.createElement('p');
+      p.textContent = `[${new Date().toLocaleTimeString()}] explosion-end`;
+      p.style.color = '#f5576c';
+      eventLog.appendChild(p);
+      eventLog.scrollTop = eventLog.scrollHeight;
+    });
+
+    // Programmatic trigger
+    window.triggerAt = function(position) {
+      const el = document.getElementById('programmatic-demo');
+      const rect = el.getBoundingClientRect();
+
+      let x, y;
+      switch(position) {
+        case 'top-left':
+          x = 50;
+          y = 50;
+          break;
+        case 'center':
+          x = rect.width / 2;
+          y = rect.height / 2;
+          break;
+        case 'bottom-right':
+          x = rect.width - 50;
+          y = rect.height - 50;
+          break;
+      }
+
+      el.explode(x, y);
+    };
+  </script>
+</body>
+</html>
