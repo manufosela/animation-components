@@ -4,8 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Animation Handclock - Demo</title>
+  <style>
+
+
+    
+
     <script type="module" src="../src/animation-handclock.js"></script>
-    <style>
+    
       * {
         box-sizing: border-box;
         margin: 0;
@@ -17,12 +22,12 @@
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         min-height: 100vh;
         padding: 2rem;
-        color: #333;
+        color: var(--accent);
       }
 
       h1, h2 {
         text-align: center;
-        color: #fff;
+        color: var(--text);
         margin-bottom: 2rem;
         font-weight: 300;
         letter-spacing: 2px;
@@ -41,7 +46,7 @@
       }
 
       .clock-card {
-        background: white;
+        background: var(--bg-elevated);
         border-radius: 16px;
         padding: 2rem;
         text-align: center;
@@ -51,7 +56,7 @@
       .clock-card h3 {
         margin-bottom: 1rem;
         font-weight: 500;
-        color: #333;
+        color: var(--accent);
       }
 
       .clock-wrapper {
@@ -88,7 +93,7 @@
 
       .control-group label {
         font-size: 0.875rem;
-        color: #666;
+        color: var(--text-muted);
       }
 
       input[type='checkbox'] {
@@ -102,8 +107,8 @@
         border: 2px solid #667eea;
         border-radius: 8px;
         font-size: 1rem;
-        color: #333;
-        background: white;
+        color: var(--accent);
+        background: var(--bg-elevated);
         cursor: pointer;
       }
 
@@ -121,7 +126,7 @@
 
       .elegant-clock {
         --handclock-size: 180px;
-        --handclock-face-color: #1a1a2e;
+        --handclock-face-color: var(--bg-panel);
         --handclock-border-color: #c9a227;
         --handclock-border-width: 3;
         --handclock-hour-hand-color: #c9a227;
@@ -152,7 +157,7 @@
       }
 
       .timezone-card {
-        background: white;
+        background: var(--bg-elevated);
         border-radius: 12px;
         padding: 1.5rem;
         text-align: center;
@@ -162,14 +167,19 @@
       .timezone-card h4 {
         margin-bottom: 0.5rem;
         font-size: 0.9rem;
-        color: #666;
+        color: var(--text-muted);
       }
 
       .timezone-clock {
         --handclock-size: 120px;
       }
-    </style>
-  </head>
+    
+  
+    
+  
+  
+</style>
+</head>
   <body>
     <div class="demo-container">
       <h1>Animation Handclock Demo</h1>

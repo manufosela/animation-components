@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Animation Explosion - Demo</title>
   <style>
+
+
+    
+
+  
     * {
       box-sizing: border-box;
     }
@@ -13,9 +18,9 @@
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       margin: 0;
       padding: 20px;
-      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      background: linear-gradient(135deg, var(--bg-panel) 0%, var(--bg-elevated) 100%);
       min-height: 100vh;
-      color: #fff;
+      color: var(--text);
     }
 
     h1 {
@@ -51,7 +56,7 @@
     }
 
     .demo-card p {
-      color: #aaa;
+      color: var(--text-muted);
       font-size: 0.9rem;
       margin-bottom: 20px;
     }
@@ -156,7 +161,12 @@
     .trigger-btn:hover {
       background: rgba(255, 255, 255, 0.2);
     }
-  </style>
+  
+
+    
+  
+  
+</style>
 </head>
 <body>
   <h1>Animation Explosion Component</h1>

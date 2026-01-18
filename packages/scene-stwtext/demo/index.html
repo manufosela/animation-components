@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Star Wars Text Crawl - Demo</title>
   <style>
+
+
+    
+
+  
     * {
       box-sizing: border-box;
       margin: 0;
@@ -14,7 +19,7 @@
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       background: #111;
-      color: #fff;
+      color: var(--text);
     }
 
     .demo-selector {
@@ -25,7 +30,7 @@
       background: rgba(0, 0, 0, 0.8);
       padding: 20px;
       border-radius: 10px;
-      border: 1px solid #333;
+      border: 1px solid var(--border);
     }
 
     .demo-selector h3 {
@@ -86,7 +91,7 @@
       background: rgba(0, 0, 0, 0.9);
       padding: 20px;
       border-radius: 10px;
-      border: 1px solid #333;
+      border: 1px solid var(--border);
       max-width: 300px;
     }
 
@@ -99,7 +104,7 @@
       display: block;
       margin-bottom: 15px;
       font-size: 0.9rem;
-      color: #aaa;
+      color: var(--text-muted);
     }
 
     .config-panel input[type="range"] {
@@ -116,11 +121,16 @@
     }
 
     .info-text {
-      color: #666;
+      color: var(--text-muted);
       font-size: 0.8rem;
       margin-top: 10px;
     }
-  </style>
+  
+
+    
+  
+  
+</style>
 </head>
 <body>
   <!-- Demo Selector -->
