@@ -274,17 +274,33 @@ export class ChristmasTree extends LitElement {
   }
 
   /**
-   * Render the star SVG
+   * Render the star SVG.
+   *
+   * 5-point star centered above the tree tip (viewBox point 50,15).
+   * Outer radius 5, inner radius 1.9 — small enough to decorate the
+   * tip without covering the tree.
    * @private
    */
   _renderStar() {
     if (!this.showStar) return null;
 
+    const cx = 50;
+    const cy = 10;
+    const outerR = 5;
+    const innerR = 1.9;
+    const points = [];
+    for (let i = 0; i < 10; i += 1) {
+      const radius = i % 2 === 0 ? outerR : innerR;
+      const angle = (Math.PI / 5) * i - Math.PI / 2;
+      const x = cx + radius * Math.cos(angle);
+      const y = cy + radius * Math.sin(angle);
+      points.push(`${x.toFixed(2)},${y.toFixed(2)}`);
+    }
+
     return svg`
       <polygon
         class="star ${this._prefersReducedMotion ? '' : 'animated'}"
-        points="50,2 61,35 95,35 68,57 79,91 50,70 21,91 32,57 5,35 39,35"
-        transform="translate(25, -5) scale(0.5)"
+        points=${points.join(' ')}
       />
     `;
   }

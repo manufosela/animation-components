@@ -44,6 +44,8 @@ export const styles = css`
   .star {
     fill: var(--star-color);
     filter: drop-shadow(0 0 10px var(--star-color));
+    transform-box: fill-box;
+    transform-origin: center;
   }
 
   .star.animated {
@@ -73,13 +75,12 @@ export const styles = css`
   }
 
   @keyframes star-pulse {
-    0%, 100% {
+    0%,
+    100% {
       transform: scale(1);
-      filter: drop-shadow(0 0 10px var(--star-color));
     }
     50% {
-      transform: scale(1.1);
-      filter: drop-shadow(0 0 20px var(--star-color));
+      transform: scale(1.15);
     }
   }
 
