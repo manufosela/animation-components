@@ -192,6 +192,12 @@ importers:
         specifier: ^8.56.0
         version: 8.57.1
 
+  packages/scene-protonimg:
+    dependencies:
+      lit:
+        specifier: ^3.2.1
+        version: 3.3.2
+
   packages/scene-stwtext:
     dependencies:
       lit:
