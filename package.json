@@ -9,7 +9,7 @@
     "test": "pnpm -r run test",
     "lint": "pnpm -r run lint",
     "site:dev": "pnpm --dir apps/site dev",
-    "site:build": "SITE_URL=https://manufosela.github.io/animation-components/ BASE_PATH=/animation-components/ pnpm --dir apps/site build",
+    "site:build": "SITE_URL=https://manufosela.dev/animation-components/ BASE_PATH=/animation-components/ pnpm --dir apps/site build",
     "site:preview": "pnpm --dir apps/site preview",
     "changeset": "changeset",
     "version": "changeset version",
