@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Animation Rain CSS - Demo</title>
+    <script type="module" src="../src/animation-raincss.js"></script>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: #0d1b2a;
+        min-height: 100vh;
+        color: #c9e4ff;
+      }
+
+      h1 {
+        text-align: center;
+        padding: 2rem;
+        font-weight: 300;
+        letter-spacing: 4px;
+        color: #7fc8f8;
+        text-shadow: 0 0 20px rgba(127, 200, 248, 0.5);
+      }
+
+      .demo-container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 0 1rem 4rem;
+        position: relative;
+        z-index: 1;
+      }
+
+      .scene {
+        border: 1px solid rgba(127, 200, 248, 0.25);
+        border-radius: 16px;
+        overflow: hidden;
+        margin-bottom: 2rem;
+        padding: 4rem 2rem;
+        text-align: center;
+        background: rgba(13, 27, 42, 0.6);
+        backdrop-filter: blur(2px);
+      }
+
+      .scene h2 {
+        font-size: 2.5rem;
+        font-weight: 200;
+        letter-spacing: 6px;
+        color: rgba(255, 255, 255, 0.85);
+        text-shadow: 0 2px 20px rgba(127, 200, 248, 0.4);
+        margin-bottom: 0.75rem;
+      }
+
+      .scene p {
+        font-size: 1.1rem;
+        color: rgba(201, 228, 255, 0.6);
+      }
+
+      .controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+        justify-content: center;
+        padding: 1.5rem;
+        background: rgba(127, 200, 248, 0.05);
+        border: 1px solid rgba(127, 200, 248, 0.2);
+        border-radius: 12px;
+        margin-bottom: 2rem;
+      }
+
+      .control-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        min-width: 150px;
+      }
+
+      .control-group label {
+        font-size: 0.875rem;
+        color: #7fc8f8;
+        opacity: 0.8;
+      }
+
+      input[type='range'] {
+        width: 150px;
+        accent-color: #7fc8f8;
+      }
+
+      input[type='color'] {
+        width: 50px;
+        height: 32px;
+        border: 1px solid rgba(127, 200, 248, 0.3);
+        border-radius: 6px;
+        background: transparent;
+        cursor: pointer;
+      }
+
+      .value-display {
+        font-size: 0.8rem;
+        color: rgba(201, 228, 255, 0.5);
+      }
+
+      button {
+        padding: 0.75rem 1.5rem;
+        border: 1px solid #7fc8f8;
+        border-radius: 8px;
+        background: transparent;
+        color: #7fc8f8;
+        font-size: 0.9rem;
+        letter-spacing: 1px;
+        cursor: pointer;
+        transition: background 0.2s, color 0.2s;
+      }
+
+      button:hover {
+        background: rgba(127, 200, 248, 0.15);
+      }
+
+      button.active {
+        background: rgba(127, 200, 248, 0.25);
+      }
+
+      .btn-group {
+        display: flex;
+        gap: 0.75rem;
+        align-items: center;
+      }
+
+      .info-section {
+        background: rgba(127, 200, 248, 0.04);
+        border: 1px solid rgba(127, 200, 248, 0.15);
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .info-section h3 {
+        color: #7fc8f8;
+        font-weight: 400;
+        margin-bottom: 1rem;
+        letter-spacing: 2px;
+        font-size: 0.95rem;
+        text-transform: uppercase;
+      }
+
+      pre {
+        background: rgba(0, 0, 0, 0.4);
+        border-radius: 8px;
+        padding: 1rem;
+        overflow-x: auto;
+        font-size: 0.85rem;
+        color: #a8d8f0;
+        line-height: 1.6;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.875rem;
+      }
+
+      th, td {
+        text-align: left;
+        padding: 0.6rem 0.8rem;
+        border-bottom: 1px solid rgba(127, 200, 248, 0.1);
+      }
+
+      th {
+        color: #7fc8f8;
+        font-weight: 400;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 0.8rem;
+      }
+
+      td code {
+        background: rgba(127, 200, 248, 0.12);
+        padding: 0.1rem 0.4rem;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        color: #a8d8f0;
+      }
+
+      .back-link {
+        display: block;
+        text-align: center;
+        padding: 1rem;
+        color: rgba(127, 200, 248, 0.5);
+        text-decoration: none;
+        font-size: 0.875rem;
+        letter-spacing: 1px;
+      }
+
+      .back-link:hover {
+        color: #7fc8f8;
+      }
+    </style>
+  </head>
+  <body>
+    <animation-raincss id="rain" num-drops="100" speed="1" color="#7fc8f8"></animation-raincss>
+
+    <h1>ANIMATION RAIN CSS</h1>
+
+    <div class="demo-container">
+      <div class="scene">
+        <h2>CSS Rain Effect</h2>
+        <p>Pure CSS animated rain drops covering the full viewport</p>
+      </div>
+
+      <div class="controls">
+        <div class="control-group">
+          <label for="numDrops">Rain drops</label>
+          <input type="range" id="numDrops" min="20" max="300" value="100" />
+          <span class="value-display" id="numDropsVal">100</span>
+        </div>
+        <div class="control-group">
+          <label for="speed">Speed</label>
+          <input type="range" id="speed" min="0.2" max="5" step="0.1" value="1" />
+          <span class="value-display" id="speedVal">1</span>
+        </div>
+        <div class="control-group">
+          <label for="color">Color</label>
+          <input type="color" id="color" value="#7fc8f8" />
+        </div>
+        <div class="control-group" style="justify-content: flex-end;">
+          <div class="btn-group">
+            <button id="btnStart">Start</button>
+            <button id="btnStop">Stop</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-section">
+        <h3>Usage</h3>
+        <pre>&lt;!-- Install --&gt;
+npm install @manufosela/animation-raincss
+
+&lt;!-- Import --&gt;
+&lt;script type="module"&gt;
+  import '@manufosela/animation-raincss';
+&lt;/script&gt;
+
+&lt;!-- Use --&gt;
+&lt;animation-raincss
+  num-drops="100"
+  speed="1"
+  color="#7fc8f8"
+  active
+&gt;&lt;/animation-raincss&gt;</pre>
+      </div>
+
+      <div class="info-section">
+        <h3>Attributes</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Attribute</th>
+              <th>Type</th>
+              <th>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>num-drops</code></td>
+              <td>Number</td>
+              <td><code>100</code></td>
+              <td>Number of rain drops</td>
+            </tr>
+            <tr>
+              <td><code>speed</code></td>
+              <td>Number</td>
+              <td><code>1</code></td>
+              <td>Fall speed multiplier</td>
+            </tr>
+            <tr>
+              <td><code>color</code></td>
+              <td>String</td>
+              <td><code>#7fc8f8</code></td>
+              <td>Drop color (any CSS color)</td>
+            </tr>
+            <tr>
+              <td><code>active</code></td>
+              <td>Boolean</td>
+              <td><code>true</code></td>
+              <td>Whether animation is visible</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="info-section">
+        <h3>Methods</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Method</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>start()</code></td>
+              <td>Show and resume the rain animation</td>
+            </tr>
+            <tr>
+              <td><code>stop()</code></td>
+              <td>Hide the rain animation with a fade transition</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <a class="back-link" href="https://manufosela.dev/animation-components/">
+        ← animation-components
+      </a>
+    </div>
+
+    <script>
+      const rain = document.getElementById('rain');
+
+      const numDropsInput = document.getElementById('numDrops');
+      const speedInput = document.getElementById('speed');
+      const colorInput = document.getElementById('color');
+      const numDropsVal = document.getElementById('numDropsVal');
+      const speedVal = document.getElementById('speedVal');
+
+      numDropsInput.addEventListener('input', () => {
+        numDropsVal.textContent = numDropsInput.value;
+        rain.setAttribute('num-drops', numDropsInput.value);
+      });
+
+      speedInput.addEventListener('input', () => {
+        speedVal.textContent = Number(speedInput.value).toFixed(1);
+        rain.setAttribute('speed', speedInput.value);
+      });
+
+      colorInput.addEventListener('input', () => {
+        rain.setAttribute('color', colorInput.value);
+      });
+
+      document.getElementById('btnStart').addEventListener('click', () => rain.start());
+      document.getElementById('btnStop').addEventListener('click', () => rain.stop());
+    </script>
+  </body>
+</html>
