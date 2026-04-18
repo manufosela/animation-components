@@ -1,0 +1,47 @@
+{
+  "name": "@manufosela/animation-snowcss",
+  "version": "2.0.0",
+  "description": "CSS-based snow effect web component built with Lit 3",
+  "main": "src/animation-snowcss.js",
+  "module": "src/animation-snowcss.js",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./src/animation-snowcss.js"
+    }
+  },
+  "files": [
+    "src/**/*.js"
+  ],
+  "scripts": {
+    "dev": "vite demo/",
+    "build": "echo 'No build step required'",
+    "test": "echo 'No tests configured'",
+    "lint": "echo 'No linter configured'"
+  },
+  "keywords": [
+    "web-component",
+    "lit",
+    "snow",
+    "css-animation",
+    "animation",
+    "weather",
+    "christmas"
+  ],
+  "author": "manufosela",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "lit": "^3.2.1"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/manufosela/animations-components.git",
+    "directory": "packages/animation-snowcss"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

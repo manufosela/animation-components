@@ -1,0 +1,48 @@
+{
+  "name": "@manufosela/animation-snow",
+  "version": "2.0.0",
+  "description": "Canvas-based snow effect web component built with Lit 3 and requestAnimationFrame",
+  "main": "src/animation-snow.js",
+  "module": "src/animation-snow.js",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./src/animation-snow.js"
+    }
+  },
+  "files": [
+    "src/**/*.js"
+  ],
+  "scripts": {
+    "dev": "vite demo/",
+    "build": "echo 'No build step required'",
+    "test": "echo 'No tests configured'",
+    "lint": "echo 'No linter configured'"
+  },
+  "keywords": [
+    "web-component",
+    "lit",
+    "snow",
+    "canvas",
+    "animation",
+    "weather",
+    "particles",
+    "christmas"
+  ],
+  "author": "manufosela",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "lit": "^3.2.1"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/manufosela/animations-components.git",
+    "directory": "packages/animation-snow"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

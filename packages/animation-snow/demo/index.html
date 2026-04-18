@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Animation Snow (Canvas) - Demo</title>
+    <script type="module" src="../src/animation-snow.js"></script>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: #08111e;
+        min-height: 100vh;
+        color: #ddeeff;
+      }
+
+      h1 {
+        text-align: center;
+        padding: 2rem;
+        font-weight: 300;
+        letter-spacing: 4px;
+        color: #e8f4ff;
+        text-shadow: 0 0 24px rgba(220, 240, 255, 0.7);
+      }
+
+      .demo-container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 0 1rem 4rem;
+        position: relative;
+        z-index: 1;
+      }
+
+      .scene {
+        border: 1px solid rgba(220, 240, 255, 0.18);
+        border-radius: 16px;
+        overflow: hidden;
+        margin-bottom: 2rem;
+        padding: 4rem 2rem;
+        text-align: center;
+        background: rgba(8, 17, 30, 0.55);
+        backdrop-filter: blur(2px);
+      }
+
+      .scene h2 {
+        font-size: 2.5rem;
+        font-weight: 200;
+        letter-spacing: 6px;
+        color: rgba(255, 255, 255, 0.9);
+        text-shadow: 0 2px 24px rgba(220, 240, 255, 0.35);
+        margin-bottom: 0.75rem;
+      }
+
+      .scene p {
+        font-size: 1.1rem;
+        color: rgba(220, 240, 255, 0.5);
+      }
+
+      .badge {
+        display: inline-block;
+        margin-top: 1rem;
+        padding: 0.3rem 0.9rem;
+        background: rgba(220, 240, 255, 0.08);
+        border: 1px solid rgba(220, 240, 255, 0.2);
+        border-radius: 20px;
+        font-size: 0.78rem;
+        letter-spacing: 1.5px;
+        color: rgba(220, 240, 255, 0.5);
+        text-transform: uppercase;
+      }
+
+      .controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+        justify-content: center;
+        padding: 1.5rem;
+        background: rgba(220, 240, 255, 0.03);
+        border: 1px solid rgba(220, 240, 255, 0.12);
+        border-radius: 12px;
+        margin-bottom: 2rem;
+      }
+
+      .control-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        min-width: 150px;
+      }
+
+      .control-group label {
+        font-size: 0.875rem;
+        color: #b8d8f4;
+        opacity: 0.85;
+      }
+
+      input[type='range'] {
+        width: 150px;
+        accent-color: #b8d8f4;
+      }
+
+      .value-display {
+        font-size: 0.8rem;
+        color: rgba(220, 240, 255, 0.4);
+      }
+
+      .fps-display {
+        font-size: 0.8rem;
+        color: rgba(180, 220, 255, 0.45);
+        letter-spacing: 1px;
+      }
+
+      button {
+        padding: 0.75rem 1.5rem;
+        border: 1px solid rgba(220, 240, 255, 0.5);
+        border-radius: 8px;
+        background: transparent;
+        color: #b8d8f4;
+        font-size: 0.9rem;
+        letter-spacing: 1px;
+        cursor: pointer;
+        transition: background 0.2s, color 0.2s;
+      }
+
+      button:hover {
+        background: rgba(220, 240, 255, 0.1);
+      }
+
+      .btn-group {
+        display: flex;
+        gap: 0.75rem;
+        align-items: center;
+      }
+
+      .info-section {
+        background: rgba(220, 240, 255, 0.02);
+        border: 1px solid rgba(220, 240, 255, 0.1);
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .info-section h3 {
+        color: #b8d8f4;
+        font-weight: 400;
+        margin-bottom: 1rem;
+        letter-spacing: 2px;
+        font-size: 0.95rem;
+        text-transform: uppercase;
+      }
+
+      pre {
+        background: rgba(0, 0, 0, 0.45);
+        border-radius: 8px;
+        padding: 1rem;
+        overflow-x: auto;
+        font-size: 0.85rem;
+        color: #a8ccec;
+        line-height: 1.6;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.875rem;
+      }
+
+      th, td {
+        text-align: left;
+        padding: 0.6rem 0.8rem;
+        border-bottom: 1px solid rgba(220, 240, 255, 0.07);
+      }
+
+      th {
+        color: #b8d8f4;
+        font-weight: 400;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 0.8rem;
+      }
+
+      td code {
+        background: rgba(220, 240, 255, 0.09);
+        padding: 0.1rem 0.4rem;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        color: #a8ccec;
+      }
+
+      .back-link {
+        display: block;
+        text-align: center;
+        padding: 1rem;
+        color: rgba(220, 240, 255, 0.35);
+        text-decoration: none;
+        font-size: 0.875rem;
+        letter-spacing: 1px;
+      }
+
+      .back-link:hover {
+        color: #b8d8f4;
+      }
+    </style>
+  </head>
+  <body>
+    <animation-snow id="snow" num-snowflakes="200" speed="2"></animation-snow>
+
+    <h1>ANIMATION SNOW</h1>
+
+    <div class="demo-container">
+      <div class="scene">
+        <h2>Canvas Snow Effect</h2>
+        <p>High-performance snow rendered via Canvas API and requestAnimationFrame</p>
+        <span class="badge">Canvas · rAF loop</span>
+      </div>
+
+      <div class="controls">
+        <div class="control-group">
+          <label for="numSnowflakes">Snowflakes</label>
+          <input type="range" id="numSnowflakes" min="20" max="800" value="200" />
+          <span class="value-display" id="numSnowflakesVal">200</span>
+        </div>
+        <div class="control-group">
+          <label for="speed">Speed</label>
+          <input type="range" id="speed" min="0.2" max="8" step="0.1" value="2" />
+          <span class="value-display" id="speedVal">2</span>
+        </div>
+        <div class="control-group" style="justify-content: flex-end;">
+          <div class="btn-group">
+            <button id="btnStart">Start</button>
+            <button id="btnStop">Stop</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-section">
+        <h3>Usage</h3>
+        <pre>&lt;!-- Install --&gt;
+npm install @manufosela/animation-snow
+
+&lt;!-- Import --&gt;
+&lt;script type="module"&gt;
+  import '@manufosela/animation-snow';
+&lt;/script&gt;
+
+&lt;!-- Use --&gt;
+&lt;animation-snow
+  num-snowflakes="200"
+  speed="2"
+  active
+&gt;&lt;/animation-snow&gt;</pre>
+      </div>
+
+      <div class="info-section">
+        <h3>Attributes</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Attribute</th>
+              <th>Type</th>
+              <th>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>num-snowflakes</code></td>
+              <td>Number</td>
+              <td><code>200</code></td>
+              <td>Number of snowflakes</td>
+            </tr>
+            <tr>
+              <td><code>speed</code></td>
+              <td>Number</td>
+              <td><code>2</code></td>
+              <td>Fall speed multiplier</td>
+            </tr>
+            <tr>
+              <td><code>active</code></td>
+              <td>Boolean</td>
+              <td><code>true</code></td>
+              <td>Whether animation is running</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="info-section">
+        <h3>Methods</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Method</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>start()</code></td>
+              <td>Start (or resume) the animation loop</td>
+            </tr>
+            <tr>
+              <td><code>stop()</code></td>
+              <td>Stop the animation loop and fade out</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <a class="back-link" href="https://manufosela.dev/animation-components/">
+        ← animation-components
+      </a>
+    </div>
+
+    <script>
+      const snow = document.getElementById('snow');
+
+      const numSnowflakesInput = document.getElementById('numSnowflakes');
+      const speedInput = document.getElementById('speed');
+      const numSnowflakesVal = document.getElementById('numSnowflakesVal');
+      const speedVal = document.getElementById('speedVal');
+
+      numSnowflakesInput.addEventListener('input', () => {
+        numSnowflakesVal.textContent = numSnowflakesInput.value;
+        snow.numSnowflakes = Number(numSnowflakesInput.value);
+      });
+
+      speedInput.addEventListener('input', () => {
+        speedVal.textContent = Number(speedInput.value).toFixed(1);
+        snow.speed = Number(speedInput.value);
+      });
+
+      document.getElementById('btnStart').addEventListener('click', () => snow.start());
+      document.getElementById('btnStop').addEventListener('click', () => snow.stop());
+    </script>
+  </body>
+</html>
