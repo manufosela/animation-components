@@ -56,6 +56,16 @@ export class AnimationRaincss extends LitElement {
         opacity: 0;
       }
     }
+
+    @media (prefers-reduced-motion: reduce) {
+      .rain-container {
+        transition: none;
+      }
+      .drop {
+        animation: none;
+        display: none;
+      }
+    }
   `;
 
   static properties = {

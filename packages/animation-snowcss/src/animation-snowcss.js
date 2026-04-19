@@ -64,6 +64,16 @@ export class AnimationSnowcss extends LitElement {
         margin-left: 20px;
       }
     }
+
+    @media (prefers-reduced-motion: reduce) {
+      .snow-container {
+        transition: none;
+      }
+      .flake {
+        animation: none;
+        display: none;
+      }
+    }
   `;
 
   static properties = {
